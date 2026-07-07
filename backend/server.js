@@ -31,6 +31,15 @@ app.use(cors({
 
 app.use(express.json({ limit: '100kb' })); // Limit payload size
 
+// Security Headers Middleware (Manual Helmet equivalent)
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'same-origin');
+  next();
+});
+
 // Security: Simple in-memory rate limiter for AI endpoints
 const rateLimitStore = new Map();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute

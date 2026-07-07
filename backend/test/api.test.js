@@ -85,4 +85,44 @@ test('API Route Integration Tests', async (t) => {
     assert.strictEqual(request.type, 'wheelchair');
     assert.strictEqual(request.urgency, 'high');
   });
+
+  await t.test('POST /api/scenario/gateb triggers Gate B bottleneck and alerts', async () => {
+    const res = await fetch(`${baseUrl}/scenario/gateb`, { method: 'POST' });
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.ok(data.message.includes('successfully'));
+
+    // Confirm state has updated
+    const stateRes = await fetch(`${baseUrl}/state`);
+    const stateData = await stateRes.json();
+    const gateB = stateData.zones.find(z => z.id === 'zone-gateB');
+    assert.strictEqual(gateB.congestionLevel, 'critical');
+  });
+
+  await t.test('POST /api/scenario/accessibility triggers wheelchair SLA alert', async () => {
+    const res = await fetch(`${baseUrl}/scenario/accessibility`, { method: 'POST' });
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.ok(data.message.includes('successfully'));
+
+    // Confirm state has updated
+    const stateRes = await fetch(`${baseUrl}/state`);
+    const stateData = await stateRes.json();
+    const hasSlaWarning = stateData.accessibilityRequests.some(r => r.urgency === 'critical');
+    assert.ok(hasSlaWarning);
+  });
+
+  await t.test('POST /api/scenario/reset restores seeded state', async () => {
+    const res = await fetch(`${baseUrl}/scenario/reset`, { method: 'POST' });
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.ok(data.message.includes('reset'));
+  });
+
+  await t.test('GET /health returns healthy status', async () => {
+    const res = await fetch(`http://localhost:${port}/health`);
+    assert.strictEqual(res.status, 200);
+    const data = await res.json();
+    assert.strictEqual(data.status, 'ok');
+  });
 });

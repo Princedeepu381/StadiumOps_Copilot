@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { API_BASE_URL } from '../config.js';
 import { Send, X, Bot, User, Loader } from 'lucide-react';
 
-export default function Copilot({ isOpen, onClose, state }) {
+export default function Copilot({ isOpen, onClose }) {
   const [messages, setMessages] = useState([
     {
       sender: 'ai',

@@ -7,6 +7,17 @@ StadiumOps Copilot is an AI-powered operations command center for FIFA World Cup
 - **Backend (`/backend`):** A Node.js + Express server that manages the state of stadium zones, incidents, accessibility requests, transport alerts, staffing logs, and triggers mock simulations. It interfaces with the Google GenAI SDK (`@google/genai`) to call the Gemini API, falling back to a mock model if no credentials are set.
 - **Frontend (`/frontend`):** A Vite-powered React application with custom NOC-themed styling, dark mode layouts, role-based workflows, and a natural language Copilot chat sidebar.
 
+## 🎯 Challenge Focus Areas Alignment
+
+StadiumOps Copilot directly aligns with all core tournament operations categories:
+
+1. **Crowd Management:** Live Zone monitoring grid with crowd flow metrics in [Dashboard.jsx](file:///frontend/src/components/Dashboard.jsx) and congestion level updating in [scenarioEngine.js](file:///backend/scenarioEngine.js).
+2. **Accessibility:** Prioritized wheelchair and escort request queue with wait-time tracking in [Accessibility.jsx](file:///frontend/src/components/Accessibility.jsx) and sorted queue logic in [store.js](file:///backend/store.js).
+3. **Transportation:** Real-time transport delays and shuttle status feed integrated into [Dashboard.jsx](file:///frontend/src/components/Dashboard.jsx) and parsed as context for AI triage in [aiService.js](file:///backend/services/aiService.js).
+4. **Multilingual Assistance:** Instant generation of public safety announcements in English, Hindi, and Spanish from active incident contexts in [Announcements.jsx](file:///frontend/src/components/Announcements.jsx).
+5. **Operational Intelligence:** Automatic prioritization of incidents based on severity, elapsed time, and zone capacities in [store.js](file:///backend/store.js).
+6. **Real-time Decision Support:** Open-ended GenAI chat Copilot in [Copilot.jsx](file:///frontend/src/components/Copilot.jsx) providing grounded answers regarding the live stadium state.
+
 ## 🚀 How to Run Locally
 
 ### 1. Prerequisites

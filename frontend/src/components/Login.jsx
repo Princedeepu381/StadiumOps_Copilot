@@ -4,12 +4,8 @@ import {
   Users, 
   Accessibility, 
   Megaphone, 
-  ArrowRight, 
-  ChevronDown, 
-  TrendingUp, 
   Globe, 
-  Cpu, 
-  AlertTriangle 
+  Cpu 
 } from 'lucide-react';
 
 export default function Login({ onLogin }) {

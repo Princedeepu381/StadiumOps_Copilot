@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { 
   AlertTriangle, 
-  MapPin, 
-  Users, 
-  TrendingUp, 
   Clock, 
   Accessibility, 
   Bus, 
@@ -390,7 +387,7 @@ export default function Dashboard({
                         </div>
                         <div style={styles.pitchDetailItem}>
                           <span style={styles.pitchDetailLabel}>Active Events</span>
-                          <span style={styles.pitchDetailVal} style={{ color: activeIncs.length > 0 ? 'var(--color-danger)' : 'var(--text-muted)' }}>
+                           <span style={{ ...styles.pitchDetailVal, color: activeIncs.length > 0 ? 'var(--color-danger)' : 'var(--text-muted)' }}>
                             {activeIncs.length} pending
                           </span>
                         </div>

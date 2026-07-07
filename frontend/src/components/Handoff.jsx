@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { API_BASE_URL } from '../config.js';
 import { FileText, Clock, Sparkles, Loader, Clipboard, Check } from 'lucide-react';
 
-export default function Handoff({ state }) {
+export default function Handoff() {
   const [selectedWindow, setSelectedWindow] = useState('Last 30 Minutes');
   const [loading, setLoading] = useState(false);
   const [summaryText, setSummaryText] = useState('');
@@ -366,9 +366,7 @@ const styles = {
     gap: '4px',
     transition: 'all 0.2s'
   },
-  historyItemBtn: {
-    // hover helper
-  },
+
   historyItemHeader: {
     display: 'flex',
     justifyContent: 'space-between',

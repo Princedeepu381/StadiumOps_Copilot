@@ -12,7 +12,7 @@ import {
 } from 'lucide-react';
 
 export default function Announcements({ state, onPublishAnnouncement, activeIncidentShortcut, onClearIncidentShortcut }) {
-  const { announcements, incidents, zones } = state;
+  const { announcements, zones } = state;
   
   // Custom manual context if not using shortcut
   const [useManualText, setUseManualText] = useState(false);
