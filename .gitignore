@@ -1,0 +1,16 @@
+# Ignore environment variable credentials
+.env
+
+# Ignore node modules and build artifacts
+node_modules/
+dist/
+public/assets/
+backend/public/
+*.log
+
+# Ignore local scratchpads and temporary files
+scratch/
+.tempmediaStorage/
+.idea/
+.vscode/
+.DS_Store
