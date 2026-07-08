@@ -3,7 +3,8 @@ import assert from 'node:assert';
 import { 
   store, 
   getPrioritizedIncidents, 
-  getPrioritizedAccessibilityRequests 
+  getPrioritizedAccessibilityRequests,
+  addLog
 } from '../store.js';
 
 test('Store Prioritization Logic Unit Tests', async (t) => {
@@ -44,6 +45,18 @@ test('Store Prioritization Logic Unit Tests', async (t) => {
     assert.strictEqual(sorted[1].id, "acc-high", "High urgency request should be second");
     assert.strictEqual(sorted[2].id, "acc-std", "Standard urgency request should be third");
     assert.strictEqual(sorted[3].id, "acc-resolved", "Resolved request should be last");
+  });
+
+  await t.test('addLog appends a new log entry to activityLog', () => {
+    const initialCount = store.activityLog.length;
+    const log = addLog("incident", "inc-test-123", "created");
+    
+    assert.strictEqual(store.activityLog.length, initialCount + 1, "Log count should increase by 1");
+    assert.strictEqual(log.entityType, "incident");
+    assert.strictEqual(log.entityId, "inc-test-123");
+    assert.strictEqual(log.action, "created");
+    assert.ok(log.timestamp);
+    assert.ok(log.id.startsWith("log-"));
   });
 
 });

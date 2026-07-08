@@ -186,7 +186,7 @@ Triage recommends assigning an available Staff member and issuing a public annou
 Ask me specifically about "Gate B congestion", "accessibility queue", or "highest priority" for details.`;
 }
 
-function getMockIncidentRecommendation(incident, zone, transportAlerts) {
+function getMockIncidentRecommendation(incident, zone, _transportAlerts) {
   const isGateB = incident.zoneId === "zone-gateB" || incident.description.toLowerCase().includes("gate b");
   
   if (isGateB) {
