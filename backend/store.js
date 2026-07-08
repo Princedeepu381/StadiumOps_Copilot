@@ -88,7 +88,7 @@ export const store = {
   ]
 };
 
-// Log helper
+// Log helper with memory leak protection (limits logs to last 200 entries)
 export function addLog(entityType, entityId, action) {
   const log = {
     id: `log-${Date.now()}-${Math.floor(Math.random() * 1000)}`,
@@ -98,6 +98,9 @@ export function addLog(entityType, entityId, action) {
     timestamp: new Date().toISOString()
   };
   store.activityLog.push(log);
+  if (store.activityLog.length > 200) {
+    store.activityLog.shift();
+  }
   return log;
 }
 

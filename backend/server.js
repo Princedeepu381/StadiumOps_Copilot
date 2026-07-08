@@ -40,10 +40,26 @@ app.use((req, res, next) => {
   next();
 });
 
-// Security: Simple in-memory rate limiter for AI endpoints
+// Security: Simple in-memory rate limiter for AI endpoints with memory leak protection
 const rateLimitStore = new Map();
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX = 30; // 30 requests per minute per IP
+
+// Periodic cleanup of rateLimitStore Map to prevent memory leaks (every 5 minutes)
+if (process.env.NODE_ENV !== 'test') {
+  setInterval(() => {
+    const now = Date.now();
+    const windowStart = now - RATE_LIMIT_WINDOW_MS;
+    for (const [ip, timestamps] of rateLimitStore.entries()) {
+      const active = timestamps.filter(t => t > windowStart);
+      if (active.length === 0) {
+        rateLimitStore.delete(ip);
+      } else {
+        rateLimitStore.set(ip, active);
+      }
+    }
+  }, 5 * 60 * 1000).unref(); // unref permits process exit
+}
 
 export function rateLimiter(req, res, next) {
   const ip = req.ip || req.connection.remoteAddress || 'unknown';
@@ -55,9 +71,9 @@ export function rateLimiter(req, res, next) {
   }
 
   const timestamps = rateLimitStore.get(ip).filter(t => t > windowStart);
-  rateLimitStore.set(ip, timestamps);
 
   if (timestamps.length >= RATE_LIMIT_MAX) {
+    rateLimitStore.set(ip, timestamps);
     return res.status(429).json({ 
       error: 'Rate limit exceeded. Max 30 requests per minute.',
       retryAfter: Math.ceil((timestamps[0] + RATE_LIMIT_WINDOW_MS - now) / 1000)
@@ -65,6 +81,7 @@ export function rateLimiter(req, res, next) {
   }
 
   timestamps.push(now);
+  rateLimitStore.set(ip, timestamps);
   next();
 }
 
