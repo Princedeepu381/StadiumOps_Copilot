@@ -1,39 +1,40 @@
-/* Google Fonts - Outfit for Headings, Inter for Body */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;700&display=swap');
+/* Google Fonts - Playfair Display for Headings, Inter for Body */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Fira+Code:wght@400;500;700&display=swap');
 
 :root {
-  /* Colors — FIFA Authentic Palette */
-  --bg-main: #070b1a;
-  --bg-card: rgba(10, 16, 36, 0.80);
-  --bg-card-hover: rgba(18, 28, 52, 0.88);
-  --border: rgba(255, 255, 255, 0.06);
-  --border-active: rgba(212, 175, 55, 0.40);
+  /* Colors — FIFA Authentic Light Editorial Palette */
+  --bg-main: #f3f6f4; /* Soft, warm light gray-green tint */
+  --bg-card: rgba(255, 255, 255, 0.72); /* Glassmorphic translucent white panel background */
+  --bg-card-hover: rgba(255, 255, 255, 0.85);
+  --border: rgba(15, 68, 38, 0.09); /* Thin, elegant dark forest-green borders */
+  --border-active: rgba(212, 175, 55, 0.60);
   
-  --primary: #d4af37; /* FIFA Trophy Gold */
-  --primary-hover: #f0ca4d;
-  --primary-glow: rgba(212, 175, 55, 0.25);
+  --primary: #104026; /* FIFA Forest Green (Elegant & high-contrast on light backgrounds) */
+  --primary-hover: #165633;
+  --primary-glow: rgba(16, 64, 38, 0.12);
 
-  --accent: #00e5ff; /* FIFA Teal/Cyan */
+  --accent: #bda24a; /* Curated Gold Accent (More readable on light background than bright yellow) */
   
-  /* Status Colors */
-  --color-success: #4ade80;
-  --color-warning: #f59e0b; /* Warm Amber */
-  --color-danger: #ef4444; /* Alert Red */
-  --color-info: #00e5ff;
+  /* Status Colors (Curated for light mode readability) */
+  --color-success: #166534; /* Dark Forest Green for text */
+  --color-warning: #9a3412; /* Rust/Orange for text */
+  --color-danger: #991b1b;  /* Dark Crimson Red for text */
+  --color-info: #0369a1;    /* Slate Blue for text */
   
   /* Text Colors */
-  --text-main: #f8fafc;
-  --text-muted: #8892b0;
-  --text-dim: #4b5563;
+  --text-main: #0c1811;     /* Highly legible deep charcoal-green */
+  --text-muted: #3d4f44;    /* Medium slate forest-green */
+  --text-dim: #6b7f74;      /* Soft gray-green */
   
   /* Fonts */
   --font-body: 'Inter', sans-serif;
-  --font-display: 'Outfit', sans-serif;
+  --font-display: 'Playfair Display', serif; /* Elegant, premium sports editorial serif font */
   --font-mono: 'Fira Code', 'Courier New', monospace;
 
   /* Shadows */
-  --shadow-card: 0 10px 30px rgba(0, 0, 0, 0.50);
+  --shadow-card: 0 12px 32px rgba(15, 68, 38, 0.05), 0 2px 8px rgba(0, 0, 0, 0.02);
 }
+
 
 * {
   box-sizing: border-box;
@@ -101,41 +102,41 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.15);
+  background: rgba(0, 0, 0, 0.03);
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(16, 64, 38, 0.1);
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(212, 175, 55, 0.3);
+  background: rgba(212, 175, 55, 0.5);
 }
 
 /* FUT Card Style */
 .fut-card {
-  background: linear-gradient(135deg, rgba(16, 24, 48, 0.85) 0%, rgba(9, 14, 28, 0.95) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.90) 0%, rgba(245, 248, 246, 0.95) 100%);
+  border: 1px solid var(--border);
   border-radius: 20px;
   position: relative;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5),
-              inset 2px 2px 4px rgba(255, 255, 255, 0.06),
-              inset -2px -2px 6px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 12px 32px rgba(15, 68, 38, 0.06),
+              inset 2px 2px 4px rgba(255, 255, 255, 0.90),
+              inset -2px -2px 6px rgba(0, 0, 0, 0.04);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow: hidden;
 }
 
 .fut-card.gold-tier {
-  border-color: rgba(212, 175, 55, 0.3);
+  border-color: rgba(212, 175, 55, 0.4);
 }
 
 .fut-card.gold-tier:hover {
   transform: translateY(-6px) scale(1.01);
-  border-color: rgba(212, 175, 55, 0.8);
-  box-shadow: 0 0 35px rgba(212, 175, 55, 0.22), 0 15px 35px rgba(0, 0, 0, 0.6);
+  border-color: rgba(212, 175, 55, 0.9);
+  box-shadow: 0 10px 25px rgba(212, 175, 55, 0.18), 0 12px 28px rgba(0, 0, 0, 0.08);
 }
 
 .fut-card.green-tier {
-  border-color: rgba(0, 229, 255, 0.3);
+  border-color: rgba(16, 64, 38, 0.2);
 }
 
 .fut-card.green-tier:hover {
@@ -204,7 +205,7 @@ body {
 .aurora-1 {
   width: 650px;
   height: 650px;
-  background: radial-gradient(circle, #d4af37 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.07) 0%, transparent 70%);
   top: -150px;
   right: -100px;
 }
@@ -212,7 +213,7 @@ body {
 .aurora-2 {
   width: 750px;
   height: 750px;
-  background: radial-gradient(circle, #6a0032 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 64, 38, 0.06) 0%, transparent 70%);
   bottom: -250px;
   left: -150px;
   animation-delay: -6s;
@@ -221,7 +222,7 @@ body {
 .aurora-3 {
   width: 550px;
   height: 550px;
-  background: radial-gradient(circle, #00e5ff 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(16, 64, 38, 0.04) 0%, transparent 70%);
   top: 35%;
   left: 25%;
   animation-delay: -12s;
@@ -475,12 +476,12 @@ h1, h2, h3, h4, h5, h6 {
   position: relative;
   width: 100%;
   height: 280px;
-  background: radial-gradient(circle, #0c162b 0%, #050814 100%);
-  border: 1px dashed rgba(212, 175, 55, 0.15);
+  background: radial-gradient(circle, #eef4f1 0%, #dce5e0 100%);
+  border: 1px dashed rgba(16, 64, 38, 0.15);
   border-radius: 20px;
   overflow: hidden;
   margin-top: 16px;
-  box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.6);
+  box-shadow: inset 0 0 24px rgba(16, 64, 38, 0.06);
 }
 
 .pitch-field {
@@ -489,17 +490,17 @@ h1, h2, h3, h4, h5, h6 {
   height: 76%;
   top: 12%;
   left: 7%;
-  background-color: rgba(212, 175, 55, 0.02);
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  background-color: rgba(16, 64, 38, 0.01);
+  border: 1.5px solid rgba(16, 64, 38, 0.12);
   border-radius: 6px;
-  box-shadow: inset 0 0 15px rgba(212, 175, 55, 0.04);
+  box-shadow: inset 0 0 15px rgba(16, 64, 38, 0.03);
 }
 
 .pitch-center-line {
   position: absolute;
   width: 1.5px;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.12);
+  background-color: rgba(16, 64, 38, 0.12);
   left: 50%;
   top: 0;
 }
@@ -508,7 +509,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   width: 70px;
   height: 70px;
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(16, 64, 38, 0.12);
   border-radius: 50%;
   left: 50%;
   top: 50%;
@@ -519,7 +520,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   width: 45px;
   height: 80px;
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(16, 64, 38, 0.12);
   border-left: none;
   left: 0;
   top: 50%;
@@ -530,7 +531,7 @@ h1, h2, h3, h4, h5, h6 {
   position: absolute;
   width: 45px;
   height: 80px;
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(16, 64, 38, 0.12);
   border-right: none;
   right: 0;
   top: 50%;
@@ -606,11 +607,12 @@ h1, h2, h3, h4, h5, h6 {
   left: 50%;
   transform: translateX(-50%);
   width: 170px;
-  background: rgba(8, 12, 24, 0.96);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--shadow-card);
   opacity: 0;
   pointer-events: none;
   transition: all 0.2s ease-in-out;
@@ -650,41 +652,41 @@ h1, h2, h3, h4, h5, h6 {
 
 .clay-btn-primary {
   background: linear-gradient(180deg, #f0ca4d 0%, #d4af37 100%);
-  color: #0a0e1a;
+  color: #0c1811;
   border-color: #d4af37;
   box-shadow: 
     inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.40),
-    inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.20),
+    inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.10),
     0 4px 12px rgba(212, 175, 55, 0.25);
 }
 .clay-btn-primary:hover {
   background: linear-gradient(180deg, #ffe066 0%, #e0bd42 100%);
   box-shadow: 
     inset 1.5px 1.5px 2px rgba(255, 255, 255, 0.50),
-    inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.15),
+    inset -1.5px -1.5px 2px rgba(0, 0, 0, 0.08),
     0 6px 16px rgba(212, 175, 55, 0.35);
 }
 
 .clay-btn-secondary {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 243, 241, 0.95) 100%);
   color: var(--text-main);
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: var(--border);
   box-shadow: 
-    inset 1px 1px 1.5px rgba(255, 255, 255, 0.15),
-    inset -1px -1px 1.5px rgba(0, 0, 0, 0.35),
-    0 4px 10px rgba(0, 0, 0, 0.15);
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.80),
+    inset -1px -1px 1.5px rgba(0, 0, 0, 0.05),
+    0 4px 10px rgba(0, 0, 0, 0.04);
 }
 .clay-btn-secondary:hover {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.04) 100%);
-  border-color: rgba(255, 255, 255, 0.15);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(230, 235, 232, 1) 100%);
+  border-color: rgba(15, 68, 38, 0.15);
   box-shadow: 
-    inset 1px 1px 1.5px rgba(255, 255, 255, 0.22),
-    inset -1px -1px 1.5px rgba(0, 0, 0, 0.25),
-    0 6px 12px rgba(0, 0, 0, 0.2);
+    inset 1px 1px 1.5px rgba(255, 255, 255, 0.90),
+    inset -1px -1px 1.5px rgba(0, 0, 0, 0.03),
+    0 6px 12px rgba(0, 0, 0, 0.06);
 }
 
 .prismatic-text {
-  background: linear-gradient(135deg, #d4af37 0%, #00e5ff 50%, #d4af37 100%);
+  background: linear-gradient(135deg, #104026 0%, #d4af37 50%, #104026 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

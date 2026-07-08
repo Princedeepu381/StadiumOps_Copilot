@@ -90,15 +90,16 @@ export default function Copilot({ isOpen, onClose }) {
               }}
             >
               {m.sender === 'ai' && (
-                <div style={{ ...styles.avatar, backgroundColor: 'rgba(16, 185, 129, 0.15)' }}>
-                  <Bot size={16} color="var(--primary-hover)" />
+                <div style={{ ...styles.avatar, backgroundColor: 'rgba(16, 64, 38, 0.08)' }}>
+                  <Bot size={16} color="var(--primary)" />
                 </div>
               )}
               
               <div 
                 style={{
                   ...styles.bubble,
-                  background: m.sender === 'user' ? 'var(--primary)' : 'rgba(255, 255, 255, 0.05)',
+                  background: m.sender === 'user' ? 'var(--primary)' : 'rgba(16, 64, 38, 0.03)',
+                  color: m.sender === 'user' ? '#ffffff' : 'var(--text-main)',
                   border: m.sender === 'user' ? 'none' : '1px solid var(--border)',
                   borderRadius: m.sender === 'user' ? '12px 12px 2px 12px' : '12px 12px 12px 2px'
                 }}
@@ -115,7 +116,7 @@ export default function Copilot({ isOpen, onClose }) {
                     if (parts.length > 1) {
                       return (
                         <div key={lIdx} style={{ marginTop: lIdx > 0 ? '6px' : '0' }}>
-                          {parts.map((part, pIdx) => pIdx % 2 === 1 ? <strong key={pIdx}>{part}</strong> : part)}
+                          {parts.map((p, pIdx) => pIdx % 2 === 1 ? <strong key={pIdx} style={{ color: m.sender === 'user' ? '#ffffff' : 'var(--text-main)' }}>{p}</strong> : p)}
                         </div>
                       );
                     }
@@ -125,7 +126,7 @@ export default function Copilot({ isOpen, onClose }) {
               </div>
 
               {m.sender === 'user' && (
-                <div style={{ ...styles.avatar, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}>
+                <div style={{ ...styles.avatar, backgroundColor: 'rgba(16, 64, 38, 0.08)' }}>
                   <User size={16} color="var(--text-main)" />
                 </div>
               )}
@@ -134,10 +135,10 @@ export default function Copilot({ isOpen, onClose }) {
 
           {loading && (
             <div style={styles.messageRow}>
-              <div style={{ ...styles.avatar, backgroundColor: 'rgba(16, 185, 129, 0.15)' }}>
-                <Bot size={16} color="var(--primary-hover)" />
+              <div style={{ ...styles.avatar, backgroundColor: 'rgba(16, 64, 38, 0.08)' }}>
+                <Bot size={16} color="var(--primary)" />
               </div>
-              <div style={{ ...styles.bubble, background: 'rgba(255, 255, 255, 0.03)', border: '1px solid var(--border)' }}>
+              <div style={{ ...styles.bubble, background: 'rgba(16, 64, 38, 0.03)', border: '1px solid var(--border)' }}>
                 <Loader className="spin" size={16} style={{ animation: 'spin 1.5s linear infinite' }} />
               </div>
             </div>
@@ -214,9 +215,11 @@ const styles = {
     height: '100%',
     width: '100%',
     border: '1px solid var(--border-active)',
-    boxShadow: '0 10px 40px rgba(0, 0, 0, 0.6)',
+    boxShadow: 'var(--shadow-card)',
     borderRadius: '16px',
-    backgroundColor: '#070f1e',
+    backgroundColor: 'var(--bg-card)',
+    backdropFilter: 'blur(20px)',
+    WebkitBackdropFilter: 'blur(20px)',
     overflow: 'hidden'
   },
   header: {
@@ -270,7 +273,6 @@ const styles = {
   bubble: {
     padding: '10px 14px',
     maxWidth: 'calc(100% - 36px)',
-    color: 'var(--text-main)'
   },
   suggestionsContainer: {
     padding: '12px 16px',
@@ -289,7 +291,7 @@ const styles = {
     gap: '6px'
   },
   suggestionBtn: {
-    background: 'rgba(255, 255, 255, 0.03)',
+    background: 'var(--bg-main)',
     border: '1px solid var(--border)',
     borderRadius: '6px',
     padding: '8px 12px',
@@ -308,7 +310,7 @@ const styles = {
   },
   chatInput: {
     flex: 1,
-    background: 'rgba(0, 0, 0, 0.3)',
+    background: 'rgba(0, 0, 0, 0.02)',
     border: '1px solid var(--border)',
     color: 'var(--text-main)',
     padding: '10px 14px',
@@ -333,15 +335,15 @@ const styles = {
 };
 const _s = `
   .suggestionBtn:hover {
-    background: rgba(255, 255, 255, 0.08);
+    background: rgba(16, 64, 38, 0.04);
     border-color: var(--border-active);
   }
   .closeBtn:hover {
     color: var(--text-main);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(16, 64, 38, 0.03);
   }
   .sendBtn:disabled {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(16, 64, 38, 0.03);
     color: var(--text-dim);
     cursor: not-allowed;
   }

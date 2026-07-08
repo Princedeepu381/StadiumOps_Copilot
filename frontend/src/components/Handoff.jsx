@@ -76,7 +76,7 @@ export default function Handoff() {
                     style={{
                       ...styles.radioBtn,
                       borderColor: selectedWindow === windowName ? 'var(--primary)' : 'var(--border)',
-                      backgroundColor: selectedWindow === windowName ? 'rgba(37,99,235,0.05)' : 'rgba(0,0,0,0.1)'
+                      backgroundColor: selectedWindow === windowName ? 'rgba(16, 64, 38, 0.05)' : 'rgba(16, 64, 38, 0.02)'
                     }}
                   >
                     {windowName}
@@ -296,7 +296,7 @@ const styles = {
     gap: '6px'
   },
   reportContent: {
-    backgroundColor: 'rgba(0,0,0,0.15)',
+    backgroundColor: 'rgba(0,0,0,0.02)',
     border: '1px solid var(--border)',
     padding: '20px',
     borderRadius: '8px',
@@ -325,7 +325,7 @@ const styles = {
     fontFamily: 'var(--font-display)',
     margin: '16px 0 8px 0',
     color: 'var(--text-main)',
-    borderBottom: '1px solid rgba(255,255,255,0.05)',
+    borderBottom: '1px solid var(--border)',
     paddingBottom: '4px'
   },
   mdH2: {
@@ -354,7 +354,7 @@ const styles = {
     overflowY: 'auto'
   },
   historyItemBtn: {
-    background: 'rgba(255, 255, 255, 0.02)',
+    background: 'var(--bg-card)',
     border: '1px solid var(--border)',
     borderRadius: '6px',
     padding: '10px 12px',
@@ -383,7 +383,7 @@ const styles = {
 };
 const _hs = `
   .historyItemBtn:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(16, 64, 38, 0.04);
     border-color: var(--border-active);
     color: var(--text-main);
   }

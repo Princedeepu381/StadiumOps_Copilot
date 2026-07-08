@@ -355,10 +355,10 @@ const styles = {
     justifyContent: 'space-between',
     padding: '0 24px',
     height: '64px',
-    backgroundColor: 'rgba(5, 8, 20, 0.65)',
+    backgroundColor: 'var(--bg-card)',
     backdropFilter: 'blur(20px)',
     WebkitBackdropFilter: 'blur(20px)',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+    borderBottom: '1px solid var(--border)',
     zIndex: '100'
   },
   branding: {

@@ -330,7 +330,7 @@ export default function Dashboard({
                     {/* Tooltip */}
                     <div className="hotspot-tooltip">
                       <div style={{ fontWeight: '800', fontSize: '0.85rem', color: 'var(--text-main)' }}>{zone.name}</div>
-                      <div style={{ height: '1px', background: 'rgba(255,255,255,0.08)', width: '100%', margin: '4px 0' }} />
+                      <div style={{ height: '1px', background: 'var(--border)', width: '100%', margin: '4px 0' }} />
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem' }}>
                         <span>Congestion:</span>
                         <span className={`status-badge ${congClass}`} style={{ fontSize: '0.6rem', padding: '2px 5px' }}>
@@ -601,7 +601,7 @@ const styles = {
     justifyContent: 'space-between',
     padding: '12px 20px',
     marginBottom: '24px',
-    backgroundColor: 'rgba(15, 23, 42, 0.4)',
+    backgroundColor: 'rgba(16, 64, 38, 0.02)',
     border: '1px dashed var(--border-active)',
     flexWrap: 'wrap',
     gap: '12px'
@@ -622,7 +622,7 @@ const styles = {
     padding: '6px 12px',
     fontSize: '0.75rem',
     cursor: 'pointer',
-    background: 'rgba(255, 255, 255, 0.03)',
+    background: 'var(--bg-card)',
     border: '1px solid var(--border)',
     color: 'var(--text-main)',
     borderRadius: '6px',
@@ -704,7 +704,7 @@ const styles = {
   },
   futDivider: {
     height: '1px',
-    background: 'linear-gradient(90deg, transparent 10%, rgba(255,255,255,0.08) 50%, transparent 90%)',
+    background: 'linear-gradient(90deg, transparent 10%, var(--border) 50%, transparent 90%)',
     width: '100%',
     marginBottom: '10px'
   },
@@ -740,7 +740,7 @@ const styles = {
     marginTop: 'auto',
     textAlign: 'center',
     paddingTop: '6px',
-    borderTop: '1px solid rgba(255, 255, 255, 0.04)'
+    borderTop: '1px solid var(--border)'
   },
   zoneHeader: {
     display: 'flex',
@@ -776,7 +776,7 @@ const styles = {
   progressBarBg: {
     width: '100%',
     height: '6px',
-    backgroundColor: 'rgba(255,255,255,0.05)',
+    backgroundColor: 'rgba(16, 64, 38, 0.03)',
     borderRadius: '3px',
     overflow: 'hidden',
     marginTop: '2px'
@@ -868,7 +868,7 @@ const styles = {
     border: '1px solid var(--border)',
     borderRadius: '8px',
     padding: '12px',
-    background: 'rgba(0,0,0,0.15)',
+    background: 'rgba(0,0,0,0.02)',
     cursor: 'pointer',
     transition: 'all 0.2s',
     display: 'flex',
@@ -912,8 +912,8 @@ const styles = {
     alignItems: 'center',
     gap: '12px',
     padding: '10px',
-    background: 'rgba(6, 182, 212, 0.05)',
-    border: '1px solid rgba(6, 182, 212, 0.15)',
+    background: 'rgba(3, 105, 161, 0.04)',
+    border: '1px solid rgba(3, 105, 161, 0.12)',
     borderRadius: '8px'
   },
   transportDetails: {
@@ -999,9 +999,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '16px',
-    border: '1.5px solid rgba(212, 175, 55, 0.15)',
+    border: '1px solid var(--border)',
     borderRadius: '16px',
-    background: 'rgba(5, 8, 20, 0.4)'
+    background: 'var(--bg-card)'
   },
   livingStadiumHeader: {
     display: 'flex',
@@ -1009,7 +1009,7 @@ const styles = {
     alignItems: 'center',
     flexWrap: 'wrap',
     gap: '12px',
-    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
+    borderBottom: '1px solid var(--border)',
     paddingBottom: '14px'
   },
   livingStadiumTitle: {
@@ -1033,8 +1033,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    background: 'rgba(255, 255, 255, 0.015)',
-    border: '1px solid rgba(255, 255, 255, 0.03)',
+    background: 'rgba(16, 64, 38, 0.01)',
+    border: '1px solid var(--border)',
     borderRadius: '12px',
     padding: '16px',
     textAlign: 'left'
@@ -1051,8 +1051,8 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     gap: '12px',
-    background: 'rgba(255, 255, 255, 0.02)',
-    border: '1px solid rgba(255, 255, 255, 0.04)',
+    background: 'rgba(16, 64, 38, 0.02)',
+    border: '1px solid var(--border)',
     borderRadius: '12px',
     padding: '16px',
     textAlign: 'left'
@@ -1072,10 +1072,10 @@ const styles = {
   // AI Quick Nudge Card (CarbonCoach Style)
   aiNudgeCard: {
     padding: '16px',
-    border: '1px solid rgba(212, 175, 55, 0.3)',
+    border: '1px solid var(--border-active)',
     borderRadius: '14px',
-    background: 'rgba(212, 175, 55, 0.02)',
-    boxShadow: 'inset 1px 1px 2px rgba(255,255,255,0.08), 0 4px 14px rgba(212, 175, 55, 0.06)',
+    background: 'rgba(212, 175, 55, 0.05)',
+    boxShadow: 'inset 1px 1px 2px rgba(255,255,255,0.40), 0 4px 14px rgba(212, 175, 55, 0.04)',
     marginBottom: '20px'
   },
   aiNudgeIcon: {
@@ -1090,7 +1090,7 @@ const styles = {
     fontFamily: 'var(--font-display)',
     fontWeight: '900',
     fontSize: '0.8rem',
-    boxShadow: 'inset 1px 1px 2px rgba(255,255,255,0.3), 0 0 10px rgba(212, 175, 55, 0.2)',
+    boxShadow: 'inset 1px 1px 2px rgba(255,255,255,0.5), 0 0 10px rgba(212, 175, 55, 0.1)',
     flexShrink: 0
   },
   aiNudgeTitle: {

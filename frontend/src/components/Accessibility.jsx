@@ -386,7 +386,7 @@ const styles = {
   },
   formCard: {
     padding: '16px',
-    backgroundColor: 'rgba(15, 23, 42, 0.5)',
+    backgroundColor: 'rgba(16, 64, 38, 0.02)',
     border: '1px solid var(--border-active)'
   },
   formTitle: {
@@ -507,7 +507,7 @@ const styles = {
     justifyContent: 'space-between',
     fontSize: '0.75rem',
     color: 'var(--text-dim)',
-    borderTop: '1px dashed rgba(255,255,255,0.05)',
+    borderTop: '1px dashed var(--border)',
     paddingTop: '8px'
   },
   detailSection: {
@@ -552,7 +552,7 @@ const styles = {
     lineHeight: '1.4'
   },
   descBlock: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.02)',
     padding: '16px',
     borderRadius: '8px',
     border: '1px solid var(--border)'
@@ -598,7 +598,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    background: 'rgba(0,0,0,0.2)',
+    background: 'rgba(0, 0, 0, 0.02)',
     border: '1px solid var(--border)',
     padding: '8px 14px',
     borderRadius: '8px',
@@ -620,7 +620,7 @@ const styles = {
     fontSize: '0.85rem'
   },
   auditBlock: {
-    backgroundColor: 'rgba(255,255,255,0.01)',
+    backgroundColor: 'var(--bg-main)',
     padding: '12px',
     borderRadius: '6px'
   },

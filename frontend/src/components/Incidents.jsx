@@ -453,7 +453,7 @@ export default function Incidents({ state, onUpdateIncident, onGenerateAnnouncem
           transition: all 0.2s ease;
         }
         .incident-item:hover {
-          background-color: rgba(255, 255, 255, 0.02) !important;
+          background-color: rgba(16, 64, 38, 0.02) !important;
           border-color: var(--border-active);
           transform: translateX(4px);
         }
@@ -520,7 +520,7 @@ const styles = {
     transition: 'all 0.2s'
   },
   typeDropdown: {
-    background: 'rgba(0,0,0,0.3)',
+    background: 'rgba(0, 0, 0, 0.02)',
     border: '1px solid var(--border)',
     color: 'var(--text-main)',
     borderRadius: '4px',
@@ -530,7 +530,7 @@ const styles = {
   },
   formCard: {
     padding: '16px',
-    backgroundColor: 'rgba(15, 23, 42, 0.5)',
+    backgroundColor: 'rgba(16, 64, 38, 0.02)',
     border: '1px solid var(--border-active)'
   },
   formTitle: {
@@ -602,7 +602,7 @@ const styles = {
     justifyContent: 'space-between',
     fontSize: '0.75rem',
     color: 'var(--text-muted)',
-    borderTop: '1px dashed rgba(255,255,255,0.05)',
+    borderTop: '1px dashed var(--border)',
     paddingTop: '8px',
     marginTop: '4px'
   },
@@ -644,7 +644,7 @@ const styles = {
     marginBottom: '6px'
   },
   detailDescBlock: {
-    backgroundColor: 'rgba(0,0,0,0.1)',
+    backgroundColor: 'rgba(0, 0, 0, 0.02)',
     padding: '14px',
     borderRadius: '8px',
     border: '1px solid var(--border)'
@@ -675,7 +675,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    background: 'rgba(0,0,0,0.2)',
+    background: 'rgba(0, 0, 0, 0.02)',
     border: '1px solid var(--border)',
     padding: '6px 12px',
     borderRadius: '6px'
@@ -697,8 +697,8 @@ const styles = {
     fontSize: '0.8rem'
   },
   aiPanel: {
-    background: 'rgba(139, 92, 246, 0.03)',
-    border: '1px solid rgba(139, 92, 246, 0.15)',
+    background: 'rgba(124, 58, 237, 0.03)',
+    border: '1px solid rgba(124, 58, 237, 0.12)',
     borderRadius: '10px',
     padding: '16px',
     display: 'flex',
@@ -709,7 +709,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottom: '1px solid rgba(139, 92, 246, 0.1)',
+    borderBottom: '1px solid rgba(124, 58, 237, 0.1)',
     paddingBottom: '8px'
   },
   aiLoadingBlock: {
@@ -765,7 +765,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderTop: '1px solid rgba(255,255,255,0.05)',
+    borderTop: '1px solid var(--border)',
     paddingTop: '10px',
     marginTop: '4px'
   },

@@ -429,7 +429,7 @@ const styles = {
     transition: 'all 0.2s'
   },
   tabContent: {
-    backgroundColor: 'rgba(0,0,0,0.15)',
+    backgroundColor: 'rgba(0,0,0,0.02)',
     border: '1px solid var(--border)',
     padding: '18px',
     borderRadius: '8px',
@@ -447,7 +447,7 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-    borderTop: '1px solid rgba(255,255,255,0.05)',
+    borderTop: '1px solid var(--border)',
     paddingTop: '12px'
   },
   voiceBtn: {
@@ -492,7 +492,7 @@ const styles = {
   },
   historyItem: {
     padding: '12px',
-    backgroundColor: 'rgba(0,0,0,0.15)',
+    backgroundColor: 'rgba(0,0,0,0.02)',
     border: '1px solid var(--border)',
     borderRadius: '8px',
     display: 'flex',

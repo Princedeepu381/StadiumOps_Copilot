@@ -135,11 +135,11 @@ export default function Login({ onLogin }) {
                 </div>
                 <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>STADIUMPITCH_MAP_SYS_V2.6</span>
               </div>
-              <div style={{ width: '100%', height: '120px', position: 'relative', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.06)', background: 'radial-gradient(circle, #0e1b33 0%, #050814 100%)', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', width: '88%', height: '76%', top: '12%', left: '6%', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '4px' }} />
-                <div style={{ position: 'absolute', width: '1.5px', height: '100%', left: '50%', backgroundColor: 'rgba(255,255,255,0.08)' }} />
-                <div style={{ position: 'absolute', width: '24px', height: '24px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.08)', left: 'calc(50% - 12px)', top: 'calc(50% - 12px)' }} />
-                <div className="pulse-critical" style={{ position: 'absolute', right: '12%', top: '46%', width: '14px', height: '14px', borderRadius: '50%', backgroundColor: 'var(--color-danger)', border: '2.5px solid #050814', boxShadow: '0 0 12px var(--color-danger)', cursor: 'pointer' }} title="Gate B: Congestion Bottleneck Warning" />
+              <div style={{ width: '100%', height: '120px', position: 'relative', borderRadius: '8px', border: '1px solid var(--border)', background: 'radial-gradient(circle, #eef4f1 0%, #dce5e0 100%)', overflow: 'hidden' }}>
+                <div style={{ position: 'absolute', width: '88%', height: '76%', top: '12%', left: '6%', border: '1px solid rgba(16, 64, 38, 0.12)', borderRadius: '4px' }} />
+                <div style={{ position: 'absolute', width: '1.5px', height: '100%', left: '50%', backgroundColor: 'rgba(16, 64, 38, 0.12)' }} />
+                <div style={{ position: 'absolute', width: '24px', height: '24px', borderRadius: '50%', border: '1px solid rgba(16, 64, 38, 0.12)', left: 'calc(50% - 12px)', top: 'calc(50% - 12px)' }} />
+                <div className="pulse-critical" style={{ position: 'absolute', right: '12%', top: '46%', width: '14px', height: '14px', borderRadius: '50%', backgroundColor: 'var(--color-danger)', border: '2.5px solid #dce5e0', boxShadow: '0 0 12px var(--color-danger)', cursor: 'pointer' }} title="Gate B: Congestion Bottleneck Warning" />
               </div>
             </div>
           </div>
@@ -344,8 +344,8 @@ const styles = {
     position: 'sticky',
     top: 0,
     zIndex: 100,
-    borderBottom: '1px solid rgba(255, 255, 255, 0.05)',
-    backgroundColor: 'rgba(5, 8, 20, 0.75)'
+    borderBottom: '1px solid var(--border)',
+    backgroundColor: 'var(--bg-card)'
   },
   navLogo: {
     display: 'flex',
@@ -431,9 +431,9 @@ const styles = {
     maxWidth: '420px',
     padding: '16px',
     borderRadius: '24px',
-    background: 'rgba(5, 8, 20, 0.45)',
-    border: '1.5px solid rgba(212, 175, 55, 0.15)',
-    boxShadow: '0 12px 40px rgba(0, 0, 0, 0.5)'
+    background: 'var(--bg-card)',
+    border: '1.5px solid var(--border)',
+    boxShadow: 'var(--shadow-card)'
   },
   mockupHeader: {
     display: 'flex',
@@ -441,12 +441,12 @@ const styles = {
     alignItems: 'center',
     marginTop: '12px',
     paddingTop: '12px',
-    borderTop: '1px solid rgba(255, 255, 255, 0.05)'
+    borderTop: '1px solid var(--border)'
   },
   mockupPill: {
     fontSize: '0.68rem',
-    background: 'rgba(255, 255, 255, 0.03)',
-    border: '1px solid rgba(255, 255, 255, 0.08)',
+    background: 'rgba(16, 64, 38, 0.04)',
+    border: '1px solid var(--border)',
     borderRadius: '6px',
     padding: '3px 8px',
     color: 'var(--text-muted)',
@@ -464,7 +464,7 @@ const styles = {
     maxWidth: '1000px',
     margin: '0 auto',
     boxSizing: 'border-box',
-    borderTop: '1px solid rgba(255, 255, 255, 0.04)'
+    borderTop: '1px solid var(--border)'
   },
   sectionHeader: {
     textAlign: 'center',
@@ -509,12 +509,12 @@ const styles = {
   livingPreviewImg: {
     borderRadius: '16px',
     overflow: 'hidden',
-    border: '1px solid rgba(255, 255, 255, 0.05)',
+    border: '1px solid var(--border)',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     minHeight: '180px',
-    background: 'rgba(0, 0, 0, 0.15)'
+    background: 'rgba(0, 0, 0, 0.02)'
   },
   previewBoxThriving: {
     padding: '24px',
@@ -529,8 +529,8 @@ const styles = {
     flexDirection: 'column',
     justifyContent: 'center',
     gap: '16px',
-    background: 'rgba(255, 255, 255, 0.015)',
-    border: '1px solid rgba(255, 255, 255, 0.03)',
+    background: 'var(--bg-card)',
+    border: '1px solid var(--border)',
     borderRadius: '16px',
     padding: '24px',
     textAlign: 'left'
@@ -568,8 +568,8 @@ const styles = {
     width: '40px',
     height: '40px',
     borderRadius: '10px',
-    background: 'rgba(255, 255, 255, 0.02)',
-    border: '1px solid rgba(255, 255, 255, 0.05)'
+    background: 'rgba(16, 64, 38, 0.03)',
+    border: '1px solid var(--border)'
   },
   featureCardTitle: {
     fontSize: '1rem',
@@ -633,8 +633,8 @@ const styles = {
     width: '64px',
     height: '64px',
     borderRadius: '50%',
-    background: 'rgba(0, 0, 0, 0.25)',
-    border: '1.5px solid rgba(255, 255, 255, 0.08)'
+    background: 'rgba(16, 64, 38, 0.04)',
+    border: '1.5px solid var(--border)'
   },
   futCardName: {
     fontSize: '0.95rem',
