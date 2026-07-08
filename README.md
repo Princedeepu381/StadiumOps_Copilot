@@ -9,14 +9,18 @@ StadiumOps Copilot is an AI-powered operations command center for FIFA World Cup
 
 ## 🎯 Challenge Focus Areas Alignment
 
-StadiumOps Copilot directly aligns with all core tournament operations categories:
+StadiumOps Copilot is a **GenAI-enabled smart assistant** designed to **enhance stadium operations** and the **overall tournament experience** for fans, organizers, volunteers, and venue staff during the **FIFA World Cup 2026**. 
 
-1. **Crowd Management:** Live Zone monitoring grid with crowd flow metrics in [Dashboard.jsx](file:///frontend/src/components/Dashboard.jsx) and congestion level updating in [scenarioEngine.js](file:///backend/scenarioEngine.js).
-2. **Accessibility:** Prioritized wheelchair and escort request queue with wait-time tracking in [Accessibility.jsx](file:///frontend/src/components/Accessibility.jsx) and sorted queue logic in [store.js](file:///backend/store.js).
+Here is how our solution aligns directly with all core challenge focus areas:
+
+1. **Crowd Management:** Live Zone monitoring grid with crowd flow metrics in [Dashboard.jsx](file:///frontend/src/components/Dashboard.jsx) and congestion level updates in [scenarioEngine.js](file:///backend/scenarioEngine.js).
+2. **Accessibility:** Prioritized wheelchair and escort request queue with wait-time tracking in [Accessibility.jsx](file:///frontend/src/components/Accessibility.jsx) and sorted queue logic in [store.js](file:///backend/store.js) to ensure inclusive tournament experiences.
 3. **Transportation:** Real-time transport delays and shuttle status feed integrated into [Dashboard.jsx](file:///frontend/src/components/Dashboard.jsx) and parsed as context for AI triage in [aiService.js](file:///backend/services/aiService.js).
-4. **Multilingual Assistance:** Instant generation of public safety announcements in English, Hindi, and Spanish from active incident contexts in [Announcements.jsx](file:///frontend/src/components/Announcements.jsx).
-5. **Operational Intelligence:** Automatic prioritization of incidents based on severity, elapsed time, and zone capacities in [store.js](file:///backend/store.js).
-6. **Real-time Decision Support:** Open-ended GenAI chat Copilot in [Copilot.jsx](file:///frontend/src/components/Copilot.jsx) providing grounded answers regarding the live stadium state.
+4. **Navigation & Wayfinding:** Seeded navigational incidents (e.g. digital display malfunctions) where the GenAI copilot provides dynamic rerouting instructions and volunteer dispatch coordinates to prevent spectator confusion.
+5. **Sustainability:** Active monitoring of environmental and sustainability indicators (e.g. solar energy micro-grid failovers) to optimize stadium power usage and manage clean-stadium logs.
+6. **Multilingual Assistance:** Instant generation of public safety announcements in English, Hindi, and Spanish from active incident contexts in [Announcements.jsx](file:///frontend/src/components/Announcements.jsx).
+7. **Operational Intelligence:** Automatic prioritization of incidents based on severity, elapsed time, and zone capacities in [store.js](file:///backend/store.js) using explainable prioritization rules.
+8. **Real-time Decision Support:** Open-ended GenAI chat Copilot in [Copilot.jsx](file:///frontend/src/components/Copilot.jsx) providing grounded answers regarding the live stadium state.
 
 ## 🚀 How to Run Locally
 

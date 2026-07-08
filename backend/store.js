@@ -19,6 +19,26 @@ export const store = {
       createdAt: new Date(Date.now() - 15 * 60 * 1000).toISOString(), // 15 mins ago
       description: "Minor water leakage near South Concourse restroom entrance",
       assignedTo: null
+    },
+    {
+      id: "inc-2",
+      type: "sustainability",
+      zoneId: "zone-gateC",
+      severity: "medium",
+      status: "open",
+      createdAt: new Date(Date.now() - 12 * 60 * 1000).toISOString(), // 12 mins ago
+      description: "Solar panel power grid feed disruption detected at Gate C (reducing backup capacity by 30%)",
+      assignedTo: null
+    },
+    {
+      id: "inc-3",
+      type: "navigation",
+      zoneId: "zone-gateA",
+      severity: "low",
+      status: "open",
+      createdAt: new Date(Date.now() - 8 * 60 * 1000).toISOString(), // 8 mins ago
+      description: "Pedestrian wayfinding digital display malfunctioning at Gate A corridor",
+      assignedTo: null
     }
   ],
   accessibilityRequests: [

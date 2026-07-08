@@ -203,6 +203,26 @@ function getMockIncidentRecommendation(incident, zone, _transportAlerts) {
     };
   }
 
+  if (incident.type === "sustainability") {
+    return {
+      whatIsHappening: "Solar panel power grid feed disruption detected at Gate C (reducing backup capacity by 30%).",
+      whyItMatters: "Affects stadium energy efficiency targets and reduces available local backup battery power for evening match operations.",
+      recommendedAction: "1. Dispatch micro-grid engineer to inspect inverter at Gate C. 2. Failover to secondary grid line. 3. AI recommends optimizing auxiliary lighting systems to save battery load.",
+      suggestedOwnerRole: "Operations Manager",
+      announcementNeeded: false
+    };
+  }
+
+  if (incident.type === "navigation") {
+    return {
+      whatIsHappening: "Pedestrian wayfinding digital display malfunctioning at Gate A corridor.",
+      whyItMatters: "Causes spectator confusion and slows down entry flows as spectators stop to search for directional guides.",
+      recommendedAction: "1. Dispatch wayfinding volunteer with physical signage board. 2. Reboot digital sign system from central control. 3. AI recommendation: route arrivals through Gate B overflow paths.",
+      suggestedOwnerRole: "Volunteer Coordinator",
+      announcementNeeded: false
+    };
+  }
+
   // Facilities leakage mock
   return {
     whatIsHappening: `Active ${incident.type} incident: "${incident.description}" at ${zone ? zone.name : "South Concourse"}.`,
