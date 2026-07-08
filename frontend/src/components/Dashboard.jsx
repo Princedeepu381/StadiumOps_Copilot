@@ -63,15 +63,6 @@ export default function Dashboard({
     return 'var(--color-success)';
   };
 
-  const getSectorText = (zoneId) => {
-    const zone = zones.find(z => z.id === zoneId);
-    if (!zone) return 'var(--text-main)';
-    const level = zone.congestionLevel;
-    if (level === 'critical' || level === 'high') return 'var(--color-danger)';
-    if (level === 'medium') return 'var(--color-warning)';
-    return 'var(--color-success)';
-  };
-
   // Determine active AI nudge based on live state
   const getAiNudgeContent = () => {
     const hasGateB = zones.some(z => z.id === 'zone-gateB' && z.congestionLevel === 'critical');

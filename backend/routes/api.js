@@ -98,22 +98,22 @@ router.patch('/incidents/:id', (req, res) => {
   }
 
   if (status !== undefined) {
-    incident.status = status;
-    addLog("incident", id, `status_updated_to_${status}`);
+    incident.status = sanitize(status);
+    addLog("incident", id, `status_updated_to_${incident.status}`);
   }
   if (assignedTo !== undefined) {
-    incident.assignedTo = assignedTo;
-    addLog("incident", id, `assigned_to_${assignedTo}`);
+    incident.assignedTo = sanitize(assignedTo);
+    addLog("incident", id, `assigned_to_${incident.assignedTo}`);
     
     // Mark volunteer status as assigned
-    const staff = store.staffing.find(s => s.name === assignedTo || s.id === assignedTo);
+    const staff = store.staffing.find(s => s.name === incident.assignedTo || s.id === incident.assignedTo);
     if (staff) {
       staff.status = "assigned";
     }
   }
   if (severity !== undefined) {
-    incident.severity = severity;
-    addLog("incident", id, `severity_updated_to_${severity}`);
+    incident.severity = sanitize(severity);
+    addLog("incident", id, `severity_updated_to_${incident.severity}`);
   }
 
   res.json(incident);
@@ -155,15 +155,15 @@ router.patch('/accessibility/:id', (req, res) => {
   }
 
   if (status !== undefined) {
-    request.status = status;
-    addLog("accessibility", id, `status_updated_to_${status}`);
+    request.status = sanitize(status);
+    addLog("accessibility", id, `status_updated_to_${request.status}`);
   }
   if (assignedTo !== undefined) {
-    request.assignedTo = assignedTo;
-    addLog("accessibility", id, `assigned_to_${assignedTo}`);
+    request.assignedTo = sanitize(assignedTo);
+    addLog("accessibility", id, `assigned_to_${request.assignedTo}`);
 
     // Update staff status
-    const staff = store.staffing.find(s => s.name === assignedTo || s.id === assignedTo);
+    const staff = store.staffing.find(s => s.name === request.assignedTo || s.id === request.assignedTo);
     if (staff) {
       staff.status = "assigned";
     }
@@ -193,6 +193,14 @@ router.post('/ai/copilot', rateLimiter, async (req, res) => {
   }
   const sanitizedQuestion = sanitize(userQuestion);
 
+  // Securely sanitize chat history array inputs
+  const sanitizedHistory = Array.isArray(chatHistory)
+    ? chatHistory.map(msg => ({
+        role: typeof msg.role === 'string' ? sanitize(msg.role) : '',
+        text: typeof msg.text === 'string' ? sanitize(msg.text) : ''
+      }))
+    : [];
+
   const fullState = {
     zones: store.zones,
     incidents: getPrioritizedIncidents(),
@@ -202,7 +210,7 @@ router.post('/ai/copilot', rateLimiter, async (req, res) => {
   };
 
   try {
-    const responseText = await handleCopilotChat(chatHistory || [], sanitizedQuestion, fullState);
+    const responseText = await handleCopilotChat(sanitizedHistory, sanitizedQuestion, fullState);
     res.json({ text: responseText });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -236,13 +244,22 @@ router.post('/ai/announce', rateLimiter, async (req, res) => {
     return res.status(400).json({ error: "Missing or invalid incidentContext" });
   }
 
+  // Securely sanitize incidentContext fields
+  const sanitizedContext = {
+    id: typeof incidentContext.id === 'string' ? sanitize(incidentContext.id) : null,
+    type: typeof incidentContext.type === 'string' ? sanitize(incidentContext.type) : 'incident',
+    zoneId: typeof incidentContext.zoneId === 'string' ? sanitize(incidentContext.zoneId) : '',
+    severity: typeof incidentContext.severity === 'string' ? sanitize(incidentContext.severity) : 'medium',
+    description: typeof incidentContext.description === 'string' ? sanitize(incidentContext.description) : ''
+  };
+
   try {
-    const announcementText = await generateMultilingualAnnouncement(incidentContext);
+    const announcementText = await generateMultilingualAnnouncement(sanitizedContext);
     
     // Auto-save generated announcement to store as a draft
     const newAnnouncement = {
       id: `ann-${Date.now()}`,
-      sourceIncidentId: incidentContext.id || null,
+      sourceIncidentId: sanitizedContext.id,
       textEn: announcementText.textEn,
       textHi: announcementText.textHi,
       textEs: announcementText.textEs,

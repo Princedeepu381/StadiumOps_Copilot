@@ -55,17 +55,6 @@ export default function Login({ onLogin }) {
     }
   };
 
-  const getSectorText = (zoneId) => {
-    if (livingTab === 'thriving') {
-      if (zoneId === 'zone-gateB') return 'var(--color-warning)';
-      return 'var(--color-success)';
-    } else {
-      if (zoneId === 'zone-gateB' || zoneId === 'zone-south') return 'var(--color-danger)';
-      if (zoneId === 'zone-eastShuttle') return 'var(--color-warning)';
-      return 'var(--color-success)';
-    }
-  };
-
   const previewZones = [
     { id: 'zone-gateA', name: 'Gate A (Main Entry)', cap: 35, level: 'low' },
     { id: 'zone-gateB', name: 'Gate B (East Entry)', cap: livingTab === 'thriving' ? 68 : 95, level: livingTab === 'thriving' ? 'medium' : 'critical' },
