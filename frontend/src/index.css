@@ -147,21 +147,23 @@ body {
 
 /* Claymorphism Card Panels (Default panels) */
 .glass-panel {
-  background: rgba(14, 22, 43, 0.8);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--bg-card);
+  backdrop-filter: blur(24px) saturate(120%);
+  -webkit-backdrop-filter: blur(24px) saturate(120%);
+  border: 1px solid var(--border);
   border-radius: 20px;
-  box-shadow: 10px 10px 24px rgba(0, 0, 0, 0.3),
-              inset 3px 3px 6px rgba(255, 255, 255, 0.05),
-              inset -3px -3px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 10px 24px rgba(15, 68, 38, 0.03),
+              inset 3px 3px 6px rgba(255, 255, 255, 0.80),
+              inset -3px -3px 8px rgba(0, 0, 0, 0.03);
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .glass-panel:hover {
-  border-color: rgba(212, 175, 55, 0.25);
+  border-color: var(--border-active);
   transform: translateY(-4px) scale(1.005);
-  box-shadow: 14px 14px 28px rgba(0, 0, 0, 0.4),
-              inset 5px 5px 10px rgba(255, 255, 255, 0.08),
-              inset -5px -5px 12px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 14px 28px rgba(15, 68, 38, 0.05),
+              inset 5px 5px 10px rgba(255, 255, 255, 0.90),
+              inset -5px -5px 12px rgba(0, 0, 0, 0.02);
 }
 
 /* Large containers, slide-out sidebar: FUT-glassmorphism with deep blur and inset highlights */
