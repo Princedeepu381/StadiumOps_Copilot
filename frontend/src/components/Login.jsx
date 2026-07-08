@@ -1,16 +1,125 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Shield, 
   Users, 
   Accessibility, 
   Megaphone, 
   Globe, 
-  Cpu 
+  Cpu,
+  ChevronDown,
+  ArrowRight
 } from 'lucide-react';
 
 export default function Login({ onLogin }) {
   const [livingTab, setLivingTab] = useState('thriving');
-  
+  const [hoveredZone, setHoveredZone] = useState(null);
+
+  const getHotspotPosition = (zoneId) => {
+    switch (zoneId) {
+      case 'zone-gateA': 
+        return { top: '23.5%', left: '18.3%', transform: 'translate(-50%, -50%)' };
+      case 'zone-gateB': 
+        return { top: '50%', left: '81.7%', transform: 'translate(-50%, -50%)' };
+      case 'zone-gateC': 
+        return { top: '23.5%', left: '81.7%', transform: 'translate(-50%, -50%)' };
+      case 'zone-north': 
+        return { top: '24.4%', left: '50%', transform: 'translate(-50%, -50%)' };
+      case 'zone-south': 
+        return { top: '75.3%', left: '50%', transform: 'translate(-50%, -50%)' };
+      case 'zone-eastShuttle': 
+        return { top: '50%', left: '89.2%', transform: 'translate(-50%, -50%)' };
+      default: 
+        return { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' };
+    }
+  };
+
+  const getSectorFill = (zoneId) => {
+    if (livingTab === 'thriving') {
+      if (zoneId === 'zone-gateB') return 'rgba(154, 52, 18, 0.08)';
+      return 'rgba(22, 101, 52, 0.06)';
+    } else {
+      if (zoneId === 'zone-gateB' || zoneId === 'zone-south') return 'rgba(153, 27, 27, 0.12)';
+      if (zoneId === 'zone-eastShuttle') return 'rgba(154, 52, 18, 0.08)';
+      return 'rgba(22, 101, 52, 0.06)';
+    }
+  };
+
+  const getSectorStroke = (zoneId) => {
+    if (livingTab === 'thriving') {
+      if (zoneId === 'zone-gateB') return 'var(--color-warning)';
+      return 'var(--color-success)';
+    } else {
+      if (zoneId === 'zone-gateB' || zoneId === 'zone-south') return 'var(--color-danger)';
+      if (zoneId === 'zone-eastShuttle') return 'var(--color-warning)';
+      return 'var(--color-success)';
+    }
+  };
+
+  const getSectorText = (zoneId) => {
+    if (livingTab === 'thriving') {
+      if (zoneId === 'zone-gateB') return 'var(--color-warning)';
+      return 'var(--color-success)';
+    } else {
+      if (zoneId === 'zone-gateB' || zoneId === 'zone-south') return 'var(--color-danger)';
+      if (zoneId === 'zone-eastShuttle') return 'var(--color-warning)';
+      return 'var(--color-success)';
+    }
+  };
+
+  const previewZones = [
+    { id: 'zone-gateA', name: 'Gate A (Main Entry)', cap: 35, level: 'low' },
+    { id: 'zone-gateB', name: 'Gate B (East Entry)', cap: livingTab === 'thriving' ? 68 : 95, level: livingTab === 'thriving' ? 'medium' : 'critical' },
+    { id: 'zone-gateC', name: 'Gate C (North Entry)', cap: 42, level: 'low' },
+    { id: 'zone-north', name: 'North Concourse', cap: 30, level: 'low' },
+    { id: 'zone-south', name: 'South Concourse', cap: livingTab === 'thriving' ? 25 : 88, level: livingTab === 'thriving' ? 'low' : 'high' },
+    { id: 'zone-eastShuttle', name: 'East Shuttle Drop-off', cap: livingTab === 'thriving' ? 15 : 55, level: livingTab === 'thriving' ? 'low' : 'medium' }
+  ];
+
+  // Animated stat counter
+  const [animatedStat, setAnimatedStat] = useState(0);
+  const targetStat = livingTab === 'thriving' ? 98 : 64;
+  useEffect(() => {
+    let start = 0;
+    const end = targetStat;
+    const duration = 800;
+    const stepTime = 16;
+    const steps = Math.ceil(duration / stepTime);
+    const increment = (end - start) / steps;
+    let current = start;
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= end) {
+        current = end;
+        clearInterval(timer);
+      }
+      setAnimatedStat(Math.round(current));
+    }, stepTime);
+    return () => clearInterval(timer);
+  }, [targetStat]);
+
+  // Scroll-reveal IntersectionObserver
+  const containerRef = useRef(null);
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
+    const targets = container.querySelectorAll('.scroll-reveal');
+    targets.forEach(t => observer.observe(t));
+    return () => targets.forEach(t => observer.unobserve(t));
+  }, []);
+
+  // Hero staggered entrance
+  const [heroReady, setHeroReady] = useState(false);
+  useEffect(() => {
+    const timer = setTimeout(() => setHeroReady(true), 100);
+    return () => clearTimeout(timer);
+  }, []);
   const personas = [
     {
       role: 'ops-manager',
@@ -87,7 +196,16 @@ export default function Login({ onLogin }) {
   };
 
   return (
-    <div style={styles.landingContainer}>
+    <div style={styles.landingContainer} ref={containerRef}>
+      {/* Floating Decorative Emojis */}
+      <div style={{ position: 'fixed', inset: 0, pointerEvents: 'none', zIndex: 0, overflow: 'hidden' }}>
+        <div className="float-slow" style={{ position: 'absolute', fontSize: '2rem', left: '8%', top: '12%', opacity: 0.15 }}>⚽</div>
+        <div className="float-medium" style={{ position: 'absolute', fontSize: '1.6rem', left: '85%', top: '20%', opacity: 0.12 }}>🏟️</div>
+        <div className="float-slow" style={{ position: 'absolute', fontSize: '1.8rem', left: '70%', top: '65%', opacity: 0.1 }}>🏆</div>
+        <div className="float-medium" style={{ position: 'absolute', fontSize: '1.4rem', left: '15%', top: '75%', opacity: 0.1 }}>🎯</div>
+        <div className="float-slow" style={{ position: 'absolute', fontSize: '1.5rem', left: '50%', top: '8%', opacity: 0.08 }}>⚽</div>
+      </div>
+
       {/* Navbar */}
       <nav style={styles.navbar} className="glass-blur" role="navigation" aria-label="Landing Page Navigation">
         <div style={styles.navLogo}>
@@ -104,19 +222,19 @@ export default function Login({ onLogin }) {
       </nav>
 
       {/* Hero Section */}
-      <section style={styles.hero} className="scroll-reveal visible" role="banner" aria-label="Introduction Banner">
+      <section style={styles.hero} role="banner" aria-label="Introduction Banner">
         <div style={styles.heroGrid}>
-          <div style={styles.heroLeft}>
-            <h1 style={styles.heroTitle}>
+          <div style={{ ...styles.heroLeft, opacity: heroReady ? 1 : 0, transform: heroReady ? 'translateX(0)' : 'translateX(-50px)', transition: 'opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1)' }}>
+            <h1 style={{ ...styles.heroTitle, opacity: heroReady ? 1 : 0, transform: heroReady ? 'translateY(0)' : 'translateY(25px)', transition: 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s' }}>
               🏟️ Your Decisions <br />
               <span className="prismatic-text">Shape the Arena</span>
             </h1>
-            <p style={styles.heroSubtitle}>
+            <p style={{ ...styles.heroSubtitle, opacity: heroReady ? 1 : 0, transform: heroReady ? 'translateY(0)' : 'translateY(25px)', transition: 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s' }}>
               Coordinate spectator flows, dispatch standby volunteers, and publish multilingual safety announcements with Google Gemini AI.
             </p>
-            <div style={styles.heroActions}>
-              <button onClick={() => scrollToSection('role-selector')} className="clay-btn clay-btn-primary" style={{ padding: '12px 24px', fontSize: '0.85rem' }} aria-label="Get Started and choose your command center role">
-                Get Started
+            <div style={{ ...styles.heroActions, opacity: heroReady ? 1 : 0, transform: heroReady ? 'translateY(0)' : 'translateY(25px)', transition: 'opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s' }}>
+              <button onClick={() => scrollToSection('role-selector')} className="clay-btn clay-btn-primary" style={{ padding: '12px 24px', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '8px' }} aria-label="Get Started and choose your command center role">
+                Get Started <ArrowRight size={18} strokeWidth={3} />
               </button>
               <button onClick={() => scrollToSection('solution')} className="clay-btn clay-btn-secondary" style={{ padding: '12px 24px', fontSize: '0.85rem' }} aria-label="Try simulation simulator">
                 Try Simulator
@@ -124,30 +242,86 @@ export default function Login({ onLogin }) {
             </div>
           </div>
 
-          <div style={styles.heroRight}>
-            {/* Tactical Pitch Map Preview Card */}
-            <div style={styles.mockupCard} className="glass-panel" role="img" aria-label="Tactical pitch map simulation preview">
-              <div style={styles.mockupHeader}>
+          <div style={{ ...styles.heroRight, opacity: heroReady ? 1 : 0, transform: heroReady ? 'translateX(0)' : 'translateX(50px)', transition: 'opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.3s' }}>
+            {/* Tactical Pitch Map Preview HUD Widget */}
+            <div style={{ ...styles.mockupCard, background: 'linear-gradient(135deg, #091a11 0%, #030a06 100%)', borderColor: 'rgba(34, 197, 94, 0.25)', boxShadow: '0 8px 32px rgba(16, 64, 38, 0.4), inset 0 0 16px rgba(34, 197, 94, 0.05)', padding: '12px' }} className="glass-panel" role="img" aria-label="Tactical pitch map simulation preview">
+              <div style={{ ...styles.mockupHeader, borderBottom: '1px solid rgba(34, 197, 94, 0.15)', borderTop: 'none', marginTop: 0, paddingBottom: '6px', paddingTop: 0 }}>
                 <div style={{ display: 'flex', gap: '6px' }}>
-                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-danger)' }} />
-                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-warning)' }} />
-                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-success)' }} />
+                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
+                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#f59e0b' }} />
+                  <div style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#10b981' }} />
                 </div>
-                <span style={{ fontSize: '0.65rem', fontFamily: 'var(--font-mono)', color: 'var(--text-muted)' }}>STADIUMPITCH_MAP_SYS_V2.6</span>
+                <span style={{ fontSize: '0.62rem', fontFamily: 'var(--font-mono)', color: '#22c55e', letterSpacing: '0.05em' }}>LIVE_TELEMETRY_FEED_V2.6</span>
               </div>
-              <div style={{ width: '100%', height: '120px', position: 'relative', borderRadius: '8px', border: '1px solid var(--border)', background: 'radial-gradient(circle, #eef4f1 0%, #dce5e0 100%)', overflow: 'hidden' }}>
-                <div style={{ position: 'absolute', width: '88%', height: '76%', top: '12%', left: '6%', border: '1px solid rgba(16, 64, 38, 0.12)', borderRadius: '4px' }} />
-                <div style={{ position: 'absolute', width: '1.5px', height: '100%', left: '50%', backgroundColor: 'rgba(16, 64, 38, 0.12)' }} />
-                <div style={{ position: 'absolute', width: '24px', height: '24px', borderRadius: '50%', border: '1px solid rgba(16, 64, 38, 0.12)', left: 'calc(50% - 12px)', top: 'calc(50% - 12px)' }} />
-                <div className="pulse-critical" style={{ position: 'absolute', right: '12%', top: '46%', width: '14px', height: '14px', borderRadius: '50%', backgroundColor: 'var(--color-danger)', border: '2.5px solid #dce5e0', boxShadow: '0 0 12px var(--color-danger)', cursor: 'pointer' }} title="Gate B: Congestion Bottleneck Warning" />
+              
+              <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.1fr', gap: '12px', marginTop: '10px' }}>
+                {/* Mini Holographic Stadium Plot */}
+                <div className="telemetry-grid" style={{ width: '100%', height: '115px', position: 'relative', borderRadius: '8px', border: '1px solid rgba(34, 197, 94, 0.15)', background: '#040b07', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <div className="radar-sweep" />
+                  
+                  {/* Miniature Stadium Outline */}
+                  <svg width="80" height="80" viewBox="0 0 100 100" style={{ opacity: 0.85, margin: 'auto' }}>
+                    {/* Pitch */}
+                    <rect x="25" y="35" width="50" height="30" fill="none" stroke="rgba(34, 197, 94, 0.3)" strokeWidth="1" />
+                    <line x1="50" y1="35" x2="50" y2="65" stroke="rgba(34, 197, 94, 0.3)" strokeWidth="1" />
+                    <circle cx="50" cy="50" r="8" fill="none" stroke="rgba(34, 197, 94, 0.3)" strokeWidth="1" />
+                    
+                    {/* Seating Rings */}
+                    <path d="M 15 25 A 40 40 0 0 1 85 25" fill="none" stroke="rgba(34, 197, 94, 0.2)" strokeWidth="4" />
+                    <path d="M 15 75 A 40 40 0 0 0 85 75" fill="none" stroke="rgba(34, 197, 94, 0.2)" strokeWidth="4" />
+                    
+                    {/* Pulsing Hotspots */}
+                    <circle cx="85" cy="50" r="4" fill="#ef4444" className="telemetry-pulse" />
+                    <circle cx="50" cy="18" r="3" fill="#10b981" />
+                    <circle cx="50" cy="82" r="3" fill="#10b981" />
+                    <circle cx="15" cy="50" r="3" fill="#10b981" />
+                  </svg>
+                  
+                  <span style={{ position: 'absolute', bottom: '6px', left: '8px', fontSize: '0.55rem', fontFamily: 'var(--font-mono)', color: 'rgba(34, 197, 94, 0.6)' }}>STAD_MAP_INIT</span>
+                </div>
+
+                {/* HUD Live Diagnostics */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '4px', fontSize: '0.62rem', fontFamily: 'var(--font-mono)', color: '#a7f3d0', justifyContent: 'center', textAlign: 'left' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#ef4444' }} />
+                    <span>ALERT: <strong style={{ color: '#ef4444' }}>GATE_B</strong></span>
+                  </div>
+                  <div>CAP: <span style={{ color: '#f59e0b' }}>94% CRIT</span></div>
+                  <div>COPILOT: <span style={{ color: '#22c55e' }}>MITIGATING</span></div>
+                  <div>DISPATCH: <span style={{ color: '#60a5fa' }}>VOL_R2</span></div>
+                  
+                  {/* Miniature graph lines */}
+                  <div style={{ marginTop: '4px', display: 'flex', alignItems: 'flex-end', gap: '2px', height: '20px', width: '100%', borderBottom: '1px solid rgba(34, 197, 94, 0.2)' }}>
+                    <div style={{ height: '30%', width: '4px', backgroundColor: 'rgba(34, 197, 94, 0.4)' }} />
+                    <div style={{ height: '45%', width: '4px', backgroundColor: 'rgba(34, 197, 94, 0.4)' }} />
+                    <div style={{ height: '60%', width: '4px', backgroundColor: 'rgba(34, 197, 94, 0.4)' }} />
+                    <div style={{ height: '85%', width: '4px', backgroundColor: '#f59e0b' }} />
+                    <div style={{ height: '95%', width: '4px', backgroundColor: '#ef4444' }} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Scrolling Terminal Output Console */}
+              <div style={{ marginTop: '10px', padding: '6px 8px', borderRadius: '4px', background: '#020604', border: '1px solid rgba(34, 197, 94, 0.1)', textAlign: 'left', minHeight: '38px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                <div style={{ fontSize: '0.58rem', fontFamily: 'var(--font-mono)', color: '#22c55e', lineHeight: '1.3' }}>
+                  <span style={{ color: 'rgba(34, 197, 94, 0.5)' }}>&gt;</span> AI_CORR: East Shuttle delay correlated with Gate B congestion.
+                </div>
+                <div style={{ fontSize: '0.58rem', fontFamily: 'var(--font-mono)', color: '#f59e0b', lineHeight: '1.3', marginTop: '2px' }}>
+                  <span style={{ color: 'rgba(245, 158, 11, 0.5)' }}>&gt;</span> TASK: Redirecting 12 standby volunteers to Gate B.
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
+      {/* Scroll Down Indicator */}
+      <div style={{ display: 'flex', justifyContent: 'center', padding: '0 0 16px 0', opacity: heroReady ? 0.5 : 0, transition: 'opacity 1s ease 1.2s' }}>
+        <ChevronDown size={32} className="bounce-slow" style={{ color: 'var(--primary)' }} />
+      </div>
+
       {/* Interactive Solution Section */}
-      <section id="solution" style={styles.section} className="scroll-reveal visible" role="region" aria-label="Matchday Simulator Preview">
+      <section id="solution" style={styles.section} className="scroll-reveal" role="region" aria-label="Matchday Simulator Preview">
         <div style={styles.sectionHeader}>
           <span style={styles.sectionEmoji}>⚽</span>
           <h2 style={styles.sectionTitle}>Meet the Living Stadium</h2>
@@ -183,24 +357,110 @@ export default function Login({ onLogin }) {
               </button>
             </div>
 
-            <div style={styles.livingPreviewImg} id="living-preview-panel" role="tabpanel" aria-labelledby={`tab-${livingTab}`}>
-              {livingTab === 'thriving' ? (
-                <div style={styles.previewBoxThriving}>
-                  <span style={{ fontSize: '3rem', marginBottom: '12px' }}>🏆</span>
-                  <h4 style={{ color: 'var(--primary)', fontWeight: '800', margin: '0 0 6px 0' }}>OPTIMAL FLOW</h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                    Turnstiles cleared, queue time under 4 minutes. Spectators flowing steadily through Gate A, B, C, D.
-                  </p>
-                </div>
-              ) : (
-                <div style={styles.previewBoxCritical}>
-                  <span style={{ fontSize: '3rem', marginBottom: '12px' }}>🚨</span>
-                  <h4 style={{ color: 'var(--color-danger)', fontWeight: '800', margin: '0 0 6px 0' }}>CRITICAL CONGESTION</h4>
-                  <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
-                    Gate B turnstile failure causing backlog of 3,500+ fans. Average wait time is 28m. Urgent volunteer dispatch required.
-                  </p>
-                </div>
-              )}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
+              <div className="pitch-container" style={{ position: 'relative', width: '100%', maxWidth: '100%', aspectRatio: '600 / 340', background: 'radial-gradient(circle, #f9fbf9 0%, #eef3f0 100%)', border: '1px solid var(--border)', borderRadius: '20px', overflow: 'hidden', margin: '0 auto' }}>
+                {/* Stadium SVG Blueprint */}
+                <svg width="100%" height="100%" viewBox="0 0 600 340" style={{ position: 'absolute', top: 0, left: 0 }}>
+                  {/* Outer Stadium Ring */}
+                  <rect x="50" y="30" width="500" height="280" rx="140" fill="none" stroke="var(--border)" strokeWidth="2" strokeDasharray="4 4" />
+                  <rect x="70" y="50" width="460" height="240" rx="120" fill="none" stroke="rgba(16, 64, 38, 0.08)" strokeWidth="8" />
+                  
+                  {/* Soccer Pitch in Center */}
+                  <g opacity="0.8">
+                    <rect x="190" y="100" width="220" height="140" rx="4" fill="rgba(16, 64, 38, 0.04)" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                    <line x1="300" y1="100" x2="300" y2="240" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                    <circle cx="300" cy="170" r="25" fill="none" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                    <rect x="190" y="140" width="20" height="60" fill="none" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                    <rect x="390" y="140" width="20" height="60" fill="none" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                  </g>
+                  
+                  {/* Seating Stands Sectors */}
+                  <path 
+                    d="M 120,72 A 200,100 0 0,1 480,72 L 440,95 A 160,70 0 0,0 160,95 Z" 
+                    fill={getSectorFill('zone-north')} 
+                    stroke={getSectorStroke('zone-north')} 
+                    strokeWidth="1.5" 
+                    style={{ transition: 'all 0.3s' }}
+                  />
+                  <path 
+                    d="M 120,268 A 200,100 0 0,0 480,268 L 440,245 A 160,70 0 0,1 160,245 Z" 
+                    fill={getSectorFill('zone-south')} 
+                    stroke={getSectorStroke('zone-south')} 
+                    strokeWidth="1.5" 
+                    style={{ transition: 'all 0.3s' }}
+                  />
+                  <path 
+                    d="M 90,110 A 100,180 0 0,1 90,230 L 115,205 A 70,140 0 0,0 115,135 Z" 
+                    fill="rgba(16, 64, 38, 0.02)" 
+                    stroke="rgba(16, 64, 38, 0.1)" 
+                    strokeWidth="1.5" 
+                  />
+                  <path 
+                    d="M 510,110 A 100,180 0 0,0 510,230 L 485,205 A 70,140 0 0,1 485,135 Z" 
+                    fill={getSectorFill('zone-eastShuttle')} 
+                    stroke={getSectorStroke('zone-eastShuttle')} 
+                    strokeWidth="1.5" 
+                    style={{ transition: 'all 0.3s' }}
+                  />
+                </svg>
+                
+                {/* Hotspot nodes on top */}
+                {previewZones.map((zone) => {
+                  const positionStyle = getHotspotPosition(zone.id);
+                  const isSelected = hoveredZone === zone.id;
+                  
+                  let nodeLetter = 'S';
+                  if (zone.id === 'zone-gateA') nodeLetter = 'A';
+                  else if (zone.id === 'zone-gateB') nodeLetter = 'B';
+                  else if (zone.id === 'zone-gateC') nodeLetter = 'C';
+                  else if (zone.id === 'zone-north') nodeLetter = 'N';
+                  else if (zone.id === 'zone-south') nodeLetter = 'S';
+                  else if (zone.id === 'zone-eastShuttle') nodeLetter = 'T';
+
+                  return (
+                    <div 
+                      key={zone.id}
+                      className={`pitch-hotspot-wrapper ${isSelected ? 'selected' : ''}`}
+                      style={positionStyle}
+                      onMouseEnter={() => setHoveredZone(zone.id)}
+                      onMouseLeave={() => setHoveredZone(null)}
+                    >
+                      <div className={`pitch-hotspot-circle ${zone.level} ${zone.level === 'critical' ? 'active-pulse' : ''}`}>
+                        {nodeLetter}
+                      </div>
+                      
+                      {/* Tooltip */}
+                      <div className="hotspot-tooltip">
+                        <div style={{ fontWeight: '800', fontSize: '0.85rem', color: 'var(--text-main)' }}>{zone.name}</div>
+                        <div style={{ height: '1px', background: 'var(--border)', width: '100%', margin: '4px 0' }} />
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem', gap: '20px' }}>
+                          <span>Congestion:</span>
+                          <span className={`status-badge ${zone.level}`} style={{ fontSize: '0.6rem', padding: '2px 5px' }}>
+                            {zone.level.toUpperCase()}
+                          </span>
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.72rem' }}>
+                          <span>Capacity:</span>
+                          <strong style={{ color: 'var(--text-main)' }}>{zone.cap}%</strong>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Status Explanation Card */}
+              <div style={livingTab === 'thriving' ? styles.previewBoxThriving : styles.previewBoxCritical}>
+                <h4 style={{ display: 'flex', alignItems: 'center', gap: '8px', fontWeight: '800', margin: '0 0 6px 0', fontSize: '0.95rem' }}>
+                  {livingTab === 'thriving' ? '🏆 OPTIMAL FLOW' : '🚨 CRITICAL CONGESTION ALERT'}
+                </h4>
+                <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: '1.4' }}>
+                  {livingTab === 'thriving' 
+                    ? 'Turnstiles cleared, queue time under 4 minutes. Spectators flowing steadily through Gate A, B, C.' 
+                    : 'Gate B turnstile failure causing backlog of 3,500+ fans. Average wait time is 28m. Directing volunteers to assist.'
+                  }
+                </p>
+              </div>
             </div>
           </div>
 
@@ -217,7 +477,7 @@ export default function Login({ onLogin }) {
               <div style={styles.livingStatBlock}>
                 <span style={styles.livingStatLabel}>Operational Health</span>
                 <span style={{ fontSize: '2.2rem', fontWeight: '900', color: livingTab === 'thriving' ? 'var(--primary)' : 'var(--color-danger)', fontFamily: 'var(--font-mono)' }}>
-                  {livingTab === 'thriving' ? '98%' : '64%'}
+                  {animatedStat}%
                 </span>
               </div>
             </div>
@@ -226,7 +486,7 @@ export default function Login({ onLogin }) {
       </section>
 
       {/* Features Grid */}
-      <section id="features" style={styles.section} className="scroll-reveal visible" role="region" aria-label="Core Capabilities">
+      <section id="features" style={styles.section} className="scroll-reveal" role="region" aria-label="Core Capabilities">
         <div style={styles.sectionHeader}>
           <h2 style={styles.sectionTitle}>📊 Command Center Capabilities</h2>
           <p style={styles.sectionSubtitle}>Professional operational monitoring tools paired with Gemini AI models.</p>
@@ -254,7 +514,7 @@ export default function Login({ onLogin }) {
       </section>
 
       {/* Role Selector Section (The Login) */}
-      <section id="role-selector" style={styles.roleSection} className="scroll-reveal visible" role="region" aria-label="Squad Draft Role Selector">
+      <section id="role-selector" style={styles.roleSection} className="scroll-reveal" role="region" aria-label="Squad Draft Role Selector">
         <div style={styles.sectionHeader}>
           <span style={styles.sectionEmoji}>🏆</span>
           <h2 style={styles.sectionTitle}>Squad Draft Selection</h2>
@@ -404,11 +664,12 @@ const styles = {
     textAlign: 'left'
   },
   heroTitle: {
-    fontSize: '2.8rem',
+    fontSize: '3.2rem',
     fontWeight: '900',
     fontFamily: 'var(--font-display)',
-    lineHeight: '1.15',
-    margin: 0
+    lineHeight: '1.1',
+    margin: 0,
+    letterSpacing: '-0.02em'
   },
   heroSubtitle: {
     fontSize: '1rem',
@@ -477,9 +738,10 @@ const styles = {
   },
   sectionTitle: {
     fontSize: '2rem',
-    fontWeight: '800',
+    fontWeight: '900',
     fontFamily: 'var(--font-display)',
-    margin: '0 0 10px 0'
+    margin: '0 0 10px 0',
+    letterSpacing: '-0.01em'
   },
   sectionSubtitle: {
     fontSize: '0.9rem',

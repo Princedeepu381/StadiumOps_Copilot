@@ -132,9 +132,9 @@ router.post('/accessibility', (req, res) => {
 
   const newRequest = {
     id: `acc-${Date.now()}`,
-    type,
-    zoneId,
-    urgency,
+    type: sanitize(type),
+    zoneId: sanitize(zoneId),
+    urgency: sanitize(urgency),
     status: "queued",
     requestedAt: new Date().toISOString(),
     assignedTo: null
@@ -185,9 +185,13 @@ router.get('/staffing', (req, res) => {
 // 7. AI Copilot Chat
 router.post('/ai/copilot', rateLimiter, async (req, res) => {
   const { chatHistory, userQuestion } = req.body;
-  if (!userQuestion) {
-    return res.status(400).json({ error: "Missing userQuestion" });
+  if (!userQuestion || typeof userQuestion !== 'string') {
+    return res.status(400).json({ error: "Missing or invalid userQuestion" });
   }
+  if (userQuestion.length > 1000) {
+    return res.status(400).json({ error: "userQuestion exceeds 1000 character limit" });
+  }
+  const sanitizedQuestion = sanitize(userQuestion);
 
   const fullState = {
     zones: store.zones,
@@ -198,7 +202,7 @@ router.post('/ai/copilot', rateLimiter, async (req, res) => {
   };
 
   try {
-    const responseText = await handleCopilotChat(chatHistory || [], userQuestion, fullState);
+    const responseText = await handleCopilotChat(chatHistory || [], sanitizedQuestion, fullState);
     res.json({ text: responseText });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -228,8 +232,8 @@ router.post('/ai/recommend/:incidentId', rateLimiter, async (req, res) => {
 // 9. AI Multilingual Announcement Generator
 router.post('/ai/announce', rateLimiter, async (req, res) => {
   const { incidentContext } = req.body;
-  if (!incidentContext) {
-    return res.status(400).json({ error: "Missing incidentContext" });
+  if (!incidentContext || typeof incidentContext !== 'object') {
+    return res.status(400).json({ error: "Missing or invalid incidentContext" });
   }
 
   try {

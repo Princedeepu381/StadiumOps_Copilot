@@ -184,6 +184,9 @@ export default function App() {
 
   return (
     <div className="app-container" role="application" aria-label="StadiumOps Command Center">
+      {/* WCAG: Skip-to-content link for keyboard users */}
+      <a href="#main-content" className="skip-to-content" aria-label="Skip to main content">Skip to main content</a>
+      
       {/* Top Bar */}
       <header style={styles.topBar} className="glass-blur" role="banner">
         <div style={styles.branding} onClick={() => setCurrentPage('dashboard')} tabIndex={0} role="button" aria-label="Go to Dashboard Home" onKeyDown={(e) => e.key === 'Enter' && setCurrentPage('dashboard')}>
@@ -285,7 +288,7 @@ export default function App() {
       </header>
 
       {/* Main Page Content */}
-      <main className="main-content" role="main" aria-label="Page Content">
+      <main id="main-content" className="main-content" role="main" aria-label="Page Content">
         <div style={{ flex: 1, overflowY: 'auto', paddingRight: isCopilotOpen ? '420px' : '0', transition: 'padding-right 0.3s cubic-bezier(0.16, 1, 0.3, 1)' }}>
           {currentPage === 'dashboard' && (
             <Dashboard 

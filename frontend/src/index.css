@@ -28,7 +28,8 @@
   
   /* Fonts */
   --font-body: 'Inter', sans-serif;
-  --font-display: 'Playfair Display', serif; /* Elegant, premium sports editorial serif font */
+  --font-display: 'Outfit', sans-serif; /* Clean geometric sans-serif for standard dashboard elements */
+  --font-editorial: 'Playfair Display', serif; /* Elegant serif display for marketing & main headers */
   --font-mono: 'Fira Code', 'Courier New', monospace;
 
   /* Shadows */
@@ -48,6 +49,38 @@ body {
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global Typography — Unified Font System */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+}
+
+h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+p, li, span, label, input, textarea, select, button {
+  font-family: var(--font-body);
+}
+
+ul, ol {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-muted);
+  padding-left: 8px;
+  list-style: none;
+}
+
+li {
+  margin-bottom: 4px;
 }
 
 /* WCAG Accessibility: Focus-visible ring for keyboard navigation */
@@ -187,10 +220,10 @@ body {
   left: 0;
   z-index: -1;
   overflow: hidden;
-  background-color: #070b1a;
+  background-color: var(--bg-main);
   background-image: 
-    linear-gradient(rgba(212, 175, 55, 0.015) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(212, 175, 55, 0.015) 1px, transparent 1px);
+    linear-gradient(rgba(16, 64, 38, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(16, 64, 38, 0.02) 1px, transparent 1px);
   background-size: 40px 40px;
   pointer-events: none;
 }
@@ -199,8 +232,8 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(130px);
-  opacity: 0.15;
-  mix-blend-mode: screen;
+  opacity: 0.35;
+  mix-blend-mode: normal;
   animation: drift 25s infinite alternate ease-in-out;
 }
 
@@ -283,24 +316,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .playstyle-badge.green, .playstyle-badge.low, .playstyle-badge.resolved {
-  background: rgba(74, 222, 128, 0.08);
-  color: #4ade80;
-  border-color: rgba(74, 222, 128, 0.3);
-  box-shadow: 0 0 10px rgba(74, 222, 128, 0.15);
+  background: rgba(22, 101, 52, 0.06);
+  color: var(--color-success);
+  border-color: rgba(22, 101, 52, 0.20);
+  box-shadow: 0 2px 6px rgba(22, 101, 52, 0.04);
 }
 
 .playstyle-badge.gold, .playstyle-badge.medium, .playstyle-badge.watch, .playstyle-badge.in-progress {
-  background: rgba(212, 175, 55, 0.08);
-  color: #d4af37;
-  border-color: rgba(212, 175, 55, 0.3);
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.15);
+  background: rgba(154, 52, 18, 0.06);
+  color: var(--color-warning);
+  border-color: rgba(154, 52, 18, 0.20);
+  box-shadow: 0 2px 6px rgba(154, 52, 18, 0.04);
 }
 
 .playstyle-badge.red, .playstyle-badge.high, .playstyle-badge.critical, .playstyle-badge.open {
-  background: rgba(239, 68, 68, 0.08);
-  color: #fca5a5;
-  border-color: rgba(239, 68, 68, 0.3);
-  box-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
+  background: rgba(153, 27, 27, 0.06);
+  color: var(--color-danger);
+  border-color: rgba(153, 27, 27, 0.20);
+  box-shadow: 0 2px 6px rgba(153, 27, 27, 0.04);
 }
 
 .playstyle-badge.info {
@@ -325,19 +358,19 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
 }
 .status-badge.low, .status-badge.resolved {
-  background: rgba(74, 222, 128, 0.08);
-  color: #4ade80;
-  border-color: rgba(74, 222, 128, 0.3);
+  background: rgba(22, 101, 52, 0.06);
+  color: var(--color-success);
+  border-color: rgba(22, 101, 52, 0.20);
 }
 .status-badge.medium, .status-badge.watch, .status-badge.in-progress {
-  background: rgba(212, 175, 55, 0.08);
-  color: #d4af37;
-  border-color: rgba(212, 175, 55, 0.3);
+  background: rgba(154, 52, 18, 0.06);
+  color: var(--color-warning);
+  border-color: rgba(154, 52, 18, 0.20);
 }
 .status-badge.high, .status-badge.critical, .status-badge.open {
-  background: rgba(239, 68, 68, 0.08);
-  color: #fca5a5;
-  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(153, 27, 27, 0.06);
+  color: var(--color-danger);
+  border-color: rgba(153, 27, 27, 0.20);
 }
 .status-badge.info {
   background: rgba(255, 255, 255, 0.04);
@@ -348,7 +381,7 @@ h1, h2, h3, h4, h5, h6 {
 /* Form controls */
 .input-field {
   width: 100%;
-  background: rgba(0, 0, 0, 0.35);
+  background: rgba(0, 0, 0, 0.02);
   border: 1px solid var(--border);
   color: var(--text-main);
   padding: 11px 15px;
@@ -356,13 +389,13 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   outline: none;
-  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: inset 1px 1px 3px rgba(0, 0, 0, 0.04);
   transition: all 0.2s;
 }
 
 .input-field:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 15px rgba(212, 175, 55, 0.15), inset 2px 2px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 15px rgba(16, 64, 38, 0.08), inset 1px 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 /* Monospace class helper */
@@ -406,20 +439,19 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-secondary {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--bg-card);
   color: var(--text-main);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2),
-              inset 2px 2px 4px rgba(255, 255, 255, 0.04),
-              inset -2px -2px 4px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03),
+              inset 1px 1px 1px rgba(255, 255, 255, 0.80);
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.15);
-  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.3),
-              inset 3px 3px 6px rgba(255, 255, 255, 0.08),
-              inset -3px -3px 6px rgba(0, 0, 0, 0.4);
+  background: var(--bg-card-hover);
+  border-color: var(--border-active);
+  color: var(--primary);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05),
+              inset 1px 1px 1px rgba(255, 255, 255, 0.90);
 }
 
 .btn-danger {
@@ -463,14 +495,91 @@ h1, h2, h3, h4, h5, h6 {
 /* Scroll reveal classes */
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
-              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scroll-reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Floating decorative emoji animations */
+@keyframes float-drift-slow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-18px) rotate(3deg); }
+  50% { transform: translateY(-8px) rotate(-2deg); }
+  75% { transform: translateY(-22px) rotate(4deg); }
+}
+
+@keyframes float-drift-medium {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  33% { transform: translateY(-14px) rotate(-4deg); }
+  66% { transform: translateY(-24px) rotate(3deg); }
+}
+
+.float-slow {
+  animation: float-drift-slow 8s ease-in-out infinite;
+}
+
+.float-medium {
+  animation: float-drift-medium 6s ease-in-out infinite;
+}
+
+/* Card hover lift effect */
+.glass-panel:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card), 0 12px 24px rgba(16, 64, 38, 0.08);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.glass-panel {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+/* Telemetry radar sweep line */
+@keyframes sweep-line {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+.radar-sweep {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #22c55e, transparent);
+  box-shadow: 0 0 10px #22c55e;
+  animation: sweep-line 3s linear infinite;
+  pointer-events: none;
+}
+
+/* Grid background helper */
+.telemetry-grid {
+  background-size: 14px 14px;
+  background-image: 
+    linear-gradient(to right, rgba(34, 197, 94, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(34, 197, 94, 0.05) 1px, transparent 1px);
+}
+
+.telemetry-pulse {
+  animation: tele-glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes tele-glow {
+  0% { box-shadow: 0 0 4px rgba(220, 38, 38, 0.4); }
+  100% { box-shadow: 0 0 14px rgba(220, 38, 38, 0.9); }
+}
+
+/* Bounce animation for scroll chevron */
+@keyframes bounce-gentle {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+.bounce-slow {
+  animation: bounce-gentle 2s ease-in-out infinite;
 }
 
 /* FIFA Interactive Pitch Map Styles */

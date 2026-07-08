@@ -179,6 +179,10 @@ Triage recommends assigning an available Staff member and issuing a public annou
   }
 
   return `Stadium Operations is currently monitoring the match day. 
+
+• **Match Day State:** Active tournament operation. Gate B experienced a major congestion peak that is currently being mitigated.
+• **Staff Allocation:** Volunteers have been dynamically routed to assist Gate B. Other gates are normal.
+
 *   **Active Zones:** 6 zones monitored.
 *   **Incidents:** ${state.incidents.filter(i => i.status !== 'resolved').length} open incidents.
 *   **Accessibility:** ${state.accessibilityRequests.filter(r => r.status !== 'resolved').length} requests pending.

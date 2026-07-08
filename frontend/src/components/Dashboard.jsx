@@ -45,6 +45,33 @@ export default function Dashboard({
     return staffing.filter(s => s.zoneId === zoneId).length;
   };
 
+  const getSectorFill = (zoneId) => {
+    const zone = zones.find(z => z.id === zoneId);
+    if (!zone) return 'rgba(16, 64, 38, 0.02)';
+    const level = zone.congestionLevel;
+    if (level === 'critical' || level === 'high') return 'rgba(153, 27, 27, 0.12)';
+    if (level === 'medium') return 'rgba(154, 52, 18, 0.12)';
+    return 'rgba(22, 101, 52, 0.06)';
+  };
+
+  const getSectorStroke = (zoneId) => {
+    const zone = zones.find(z => z.id === zoneId);
+    if (!zone) return 'rgba(16, 64, 38, 0.1)';
+    const level = zone.congestionLevel;
+    if (level === 'critical' || level === 'high') return 'var(--color-danger)';
+    if (level === 'medium') return 'var(--color-warning)';
+    return 'var(--color-success)';
+  };
+
+  const getSectorText = (zoneId) => {
+    const zone = zones.find(z => z.id === zoneId);
+    if (!zone) return 'var(--text-main)';
+    const level = zone.congestionLevel;
+    if (level === 'critical' || level === 'high') return 'var(--color-danger)';
+    if (level === 'medium') return 'var(--color-warning)';
+    return 'var(--color-success)';
+  };
+
   // Determine active AI nudge based on live state
   const getAiNudgeContent = () => {
     const hasGateB = zones.some(z => z.id === 'zone-gateB' && z.congestionLevel === 'critical');
@@ -300,31 +327,99 @@ export default function Dashboard({
               <span style={styles.zoneSubtitle}>Click gates or stands to inspect crowd dynamics</span>
             </div>
             
-            <div className="pitch-container">
-              {/* Field Lines */}
-              <div className="pitch-field">
-                <div className="pitch-center-line" />
-                <div className="pitch-center-circle" />
-                <div className="pitch-penalty-left" />
-                <div className="pitch-penalty-right" />
-              </div>
+            <div className="pitch-container" style={{ position: 'relative', width: '100%', maxWidth: '600px', aspectRatio: '600 / 340', background: 'radial-gradient(circle, #f9fbf9 0%, #eef3f0 100%)', border: '1px solid var(--border)', borderRadius: '20px', overflow: 'hidden', margin: '0 auto' }}>
+              {/* Stadium SVG Blueprint */}
+              <svg width="100%" height="100%" viewBox="0 0 600 340" style={{ position: 'absolute', top: 0, left: 0 }}>
+                {/* Outer Stadium Ring */}
+                <rect x="50" y="30" width="500" height="280" rx="140" fill="none" stroke="var(--border)" strokeWidth="2" strokeDasharray="4 4" />
+                <rect x="70" y="50" width="460" height="240" rx="120" fill="none" stroke="rgba(16, 64, 38, 0.08)" strokeWidth="8" />
+                
+                {/* Soccer Pitch in Center */}
+                <g opacity="0.8">
+                  {/* Grass base */}
+                  <rect x="190" y="100" width="220" height="140" rx="4" fill="rgba(16, 64, 38, 0.04)" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                  {/* Center line */}
+                  <line x1="300" y1="100" x2="300" y2="240" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                  {/* Center circle */}
+                  <circle cx="300" cy="170" r="25" fill="none" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                  {/* Goal boxes */}
+                  <rect x="190" y="140" width="20" height="60" fill="none" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                  <rect x="390" y="140" width="20" height="60" fill="none" stroke="rgba(16, 64, 38, 0.15)" strokeWidth="1.5" />
+                </g>
+                
+                {/* Seating Stands Sectors (Dynamic Coloring based on Congestion) */}
+                {/* North Concourse Seating Arc (Top) */}
+                <path 
+                  d="M 120,72 A 200,100 0 0,1 480,72 L 440,95 A 160,70 0 0,0 160,95 Z" 
+                  fill={getSectorFill('zone-north')} 
+                  stroke={getSectorStroke('zone-north')} 
+                  strokeWidth="1.5" 
+                  style={{ cursor: 'pointer', transition: 'all 0.3s' }}
+                  onClick={() => setSelectedPitchZone(selectedPitchZone === 'zone-north' ? null : 'zone-north')}
+                />
+                
+                {/* South Concourse Seating Arc (Bottom) */}
+                <path 
+                  d="M 120,268 A 200,100 0 0,0 480,268 L 440,245 A 160,70 0 0,1 160,245 Z" 
+                  fill={getSectorFill('zone-south')} 
+                  stroke={getSectorStroke('zone-south')} 
+                  strokeWidth="1.5" 
+                  style={{ cursor: 'pointer', transition: 'all 0.3s' }}
+                  onClick={() => setSelectedPitchZone(selectedPitchZone === 'zone-south' ? null : 'zone-south')}
+                />
+                
+                {/* West Seating Block (Left) */}
+                <path 
+                  d="M 90,110 A 100,180 0 0,1 90,230 L 115,205 A 70,140 0 0,0 115,135 Z" 
+                  fill="rgba(16, 64, 38, 0.02)" 
+                  stroke="rgba(16, 64, 38, 0.1)" 
+                  strokeWidth="1.5" 
+                />
+                
+                {/* East Seating Block (Right / East Shuttle) */}
+                <path 
+                  d="M 510,110 A 100,180 0 0,0 510,230 L 485,205 A 70,140 0 0,1 485,135 Z" 
+                  fill={getSectorFill('zone-eastShuttle')} 
+                  stroke={getSectorStroke('zone-eastShuttle')} 
+                  strokeWidth="1.5" 
+                  style={{ cursor: 'pointer', transition: 'all 0.3s' }}
+                  onClick={() => setSelectedPitchZone(selectedPitchZone === 'zone-eastShuttle' ? null : 'zone-eastShuttle')}
+                />
+              </svg>
               
-              {/* Hotspots */}
+              {/* Tooltip triggers and badges overlay */}
               {zones.map((zone) => {
                 const positionStyle = getHotspotPosition(zone.id);
                 const congClass = getCongestionClass(zone.congestionLevel);
                 const activeIncs = openIncidents.filter(i => i.zoneId === zone.id);
                 const isSelected = selectedPitchZone === zone.id;
                 
+                // Get short letter for the overlay node
+                let nodeLetter = 'S';
+                if (zone.id === 'zone-gateA') nodeLetter = 'A';
+                else if (zone.id === 'zone-gateB') nodeLetter = 'B';
+                else if (zone.id === 'zone-gateC') nodeLetter = 'C';
+                else if (zone.id === 'zone-north') nodeLetter = 'N';
+                else if (zone.id === 'zone-south') nodeLetter = 'S';
+                else if (zone.id === 'zone-eastShuttle') nodeLetter = 'T';
+
                 return (
                   <div 
                     key={zone.id}
-                    onClick={() => setSelectedPitchZone(zone.id === selectedPitchZone ? null : zone.id)}
                     className={`pitch-hotspot-wrapper ${isSelected ? 'selected' : ''}`}
                     style={positionStyle}
                   >
-                    <div className={`pitch-hotspot-circle ${congClass}`}>
-                      {zone.id.split('-')[1].charAt(4).toUpperCase() || 'S'}
+                    <div 
+                      className={`pitch-hotspot-circle ${congClass} ${isSelected ? 'active-pulse' : ''}`}
+                      onClick={() => setSelectedPitchZone(zone.id === selectedPitchZone ? null : zone.id)}
+                      role="button"
+                      aria-label={`Inspect ${zone.name}`}
+                      tabIndex={0}
+                    >
+                      {nodeLetter}
+                      {activeIncs.length > 0 && (
+                        <span className="hotspot-badge">{activeIncs.length}</span>
+                      )}
                     </div>
                     
                     {/* Tooltip */}
@@ -1118,15 +1213,17 @@ const styles = {
 const getHotspotPosition = (zoneId) => {
   switch (zoneId) {
     case 'zone-gateA': 
-      return { top: '5%', left: '50%', transform: 'translateX(-50%)' };
+      return { top: '23.5%', left: '18.3%', transform: 'translate(-50%, -50%)' };
     case 'zone-gateB': 
-      return { top: '50%', right: '4%', transform: 'translateY(-50%)' };
+      return { top: '50%', left: '81.7%', transform: 'translate(-50%, -50%)' };
     case 'zone-gateC': 
-      return { bottom: '5%', left: '50%', transform: 'translateX(-50%)' };
-    case 'zone-gateD': 
-      return { top: '50%', left: '4%', transform: 'translateY(-50%)' };
-    case 'zone-seating': 
-      return { top: '35%', left: '50%', transform: 'translate(-50%, -50%)' };
+      return { top: '23.5%', left: '81.7%', transform: 'translate(-50%, -50%)' };
+    case 'zone-north': 
+      return { top: '24.4%', left: '50%', transform: 'translate(-50%, -50%)' };
+    case 'zone-south': 
+      return { top: '75.3%', left: '50%', transform: 'translate(-50%, -50%)' };
+    case 'zone-eastShuttle': 
+      return { top: '50%', left: '89.2%', transform: 'translate(-50%, -50%)' };
     default: 
       return { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' };
   }

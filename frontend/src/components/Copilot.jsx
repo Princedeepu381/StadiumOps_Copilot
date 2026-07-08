@@ -6,7 +6,7 @@ export default function Copilot({ isOpen, onClose }) {
   const [messages, setMessages] = useState([
     {
       sender: 'ai',
-      text: "Hello! I am your StadiumOps Copilot. I have real-time visibility into the stadium's zones, active incidents, accessibility requests, transport alerts, and staffing loads. Ask me anything about the current situation."
+      text: "Hello! I am your StadiumOps Copilot. I have real-time visibility into the stadium's zones, active incidents, accessibility requests, transport alerts, and staffing loads. Ask me anything about the current situation.\n\n• **Match Day State:** Active tournament operation. Gate B experienced a major congestion peak that is currently being mitigated.\n• **Staff Allocation:** Volunteers have been dynamically routed to assist Gate B. Other gates are normal."
     }
   ]);
   const [inputValue, setInputValue] = useState('');
